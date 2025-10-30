@@ -1,4 +1,3 @@
-// ✅ Uses the same endpoint as your site:
 const ENDPOINT = "https://script.google.com/macros/s/AKfycbx1EmMSYXygT8HLcNJGU4TW8jiLMhHl7MRvVdSPUjGH6PUQNYBzt_CJq2-DiPNtQsCCpw/exec";
 
 const listEl = document.getElementById('list');
@@ -23,8 +22,8 @@ async function loadPending(){
       const card = document.createElement('div');
       card.className = 'card';
       card.innerHTML = `
-        <h3>${r.name||'Unknown'} — ${r.service||''}</h3>
-        <p class="muted">${r.date||''} ${r.time||''}</p>
+        <h4>${r.name||'Unknown'} — ${r.service||''}</h4>
+        <p class="muted">${r.date||''} ${r.time||''} • ${r.basePrice ? ('$'+r.basePrice) : ''} • SoakOff: ${r.soakOff||'No'}</p>
         <p>${r.phone||''} • ${r.email||''}</p>
         <p>${(r.notes||'').replace(/\n/g,'<br>')}</p>
         <div class="form" style="padding:12px;margin-top:10px;">
