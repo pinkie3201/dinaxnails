@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>dinaxnails • San Diego Nail Art • Transparent pricing • Easy booking</title>
+  <meta name="description" content="San Diego nail art by Dina — clean sets, comfy vibes, clear pricing, easy booking." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <meta property="og:title" content="dinaxnails — San Diego Nail Art" />
+  <meta property="og:description" content="Transparent pricing • Easy booking" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/assets/og.jpg" />
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="logo" href="#">dinaxnails</a>
+      <nav>
+        <a href="#services">Services</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#policies">Policies</a>
+        <a class="btn" href="#book">Book Now</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <h1>San Diego Nail Art</h1>
+          <p>Clean sets, comfy vibes, clear pricing. Book in two taps.</p>
+          <a class="btn btn-lg" href="#book">Book Now</a>
+        </div>
+        <div class="hero-card">
+          <img src="https://images.unsplash.com/photo-1610992015732-2449ad3b1d38?q=80&w=1200&auto=format&fit=crop" alt="nail art sample" />
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="section">
+      <div class="container">
+        <h2>Services & Prices</h2>
+        <p class="muted">Edit any time. Duration includes prep + cleanup.</p>
+        <div class="grid">
+          <div class="card">
+            <h3>Gel X New Set</h3>
+            <p class="price">$85 • 90 min</p>
+            <p class="desc">Soft gel extensions, custom shape. Includes basic art (2 nails).</p>
+          </div>
+          <div class="card">
+            <h3>Gel X Refill</h3>
+            <p class="price">$65 • 75 min</p>
+            <p class="desc">Maintenance + color refresh. 3–4 week window.</p>
+          </div>
+          <div class="card">
+            <h3>Builder Gel Overlay</h3>
+            <p class="price">$70 • 75 min</p>
+            <p class="desc">Strengthen natural nails, includes short length.</p>
+          </div>
+          <div class="card">
+            <h3>Nail Art Add-On</h3>
+            <p class="price">+$10–$40 • 15–30 min</p>
+            <p class="desc">French tips, chrome, decals, or hand-painted details.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery" class="section alt">
+      <div class="container">
+        <h2>Gallery</h2>
+        <p class="muted">Recent sets from Instagram. Tap to view more.</p>
+        <div class="masonry">
+          <a class="tile" href="https://instagram.com/dinaxnails" target="_blank" rel="noopener">
+            <img src="https://images.unsplash.com/photo-1519014816548-bf5fe059798b?q=80&w=1200&auto=format&fit=crop" alt="nail art"/>
+          </a>
+          <a class="tile" href="https://instagram.com/dinaxnails" target="_blank" rel="noopener">
+            <img src="https://images.unsplash.com/photo-1618077360395-f3068be8f0cc?q=80&w=1200&auto=format&fit=crop" alt="nail art"/>
+          </a>
+          <a class="tile" href="https://instagram.com/dinaxnails" target="_blank" rel="noopener">
+            <img src="https://images.unsplash.com/photo-1583324113626-70df0f4deaab?q=80&w=1200&auto=format&fit=crop" alt="nail art"/>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="book" class="section">
+      <div class="container">
+        <h2>Request a Booking</h2>
+        <p class="muted">You’ll get a confirmation DM/text. No time is held until Dina approves.</p>
+        <form id="booking-form" class="form">
+          <div class="row">
+            <label>Full Name<input name="name" required placeholder="Your name"/></label>
+            <label>Phone<input name="phone" required placeholder="(555) 555-5555"/></label>
+          </div>
+          <div class="row">
+            <label>Email<input name="email" type="email" placeholder="you@email.com"/></label>
+            <label>Service
+              <select name="service" required>
+                <option value="">Select a service…</option>
+                <option>Gel X New Set</option>
+                <option>Gel X Refill</option>
+                <option>Builder Gel Overlay</option>
+                <option>Nail Art Add-On</option>
+              </select>
+            </label>
+          </div>
+          <div class="row">
+            <label>Date<input name="date" type="date" required/></label>
+            <label>Time<input name="time" type="time" required/></label>
+          </div>
+          <label>Notes (inspo links, allergies)<textarea name="notes" rows="3" placeholder="Paste IG/TikTok links or notes"></textarea></label>
+          <button class="btn btn-lg" type="submit">Request Appointment</button>
+          <p id="form-status" class="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <section id="policies" class="section alt">
+      <div class="container">
+        <h2>Policies</h2>
+        <ul class="policies">
+          <li>Deposits hold your spot (link sent after approval).</li>
+          <li>24-hour reschedule window. 10-minute grace period.</li>
+          <li>Please arrive with bare nails unless you booked removal.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> dinaxnails • San Diego, CA</p>
+      <a class="btn" href="https://instagram.com/dinaxnails" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </footer>
+
+  <script src="/assets/script.js"></script>
+</body>
+</html>
