@@ -1,5 +1,5 @@
-// LIVE backend URL + token you already deployed:
-const BOOKING_ENDPOINT = "https://script.google.com/macros/s/AKfycbx1EmMSYXygT8HLcNJGU4TW8jiLMhHl7MRvVdSPUjGH6PUQNYBzt_CJq2-DiPNtQsCCpw/exec";
+// NEW live Apps Script URL + token:
+const BOOKING_ENDPOINT = "https://script.google.com/macros/s/AKfycbxqLSIrJ4f8ntZOvMB96Ul2R-EBuAGcijC93LVxtLhEgcLOGgmwZ8pzFc2RtAW_ZHkJpQ/exec";
 const ADMIN_TOKEN      = "dinax-9327"; // must match Apps Script
 
 // Service catalog: base price + base duration (minutes)
@@ -11,7 +11,6 @@ const SERVICES = {
   "builder-medium": { name:"Builder Gel • Medium",       price:45, duration:90 },
   "builder-long":   { name:"Builder Gel • Long",         price:50, duration:105 },
 };
-
 const SOAK_OFF_EXTRA_MIN = 15;
 
 const form      = document.getElementById('booking-form');
