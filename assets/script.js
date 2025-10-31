@@ -1,8 +1,8 @@
-// LIVE Apps Script endpoint + token
+// LIVE Apps Script endpoint
 const BOOKING_ENDPOINT = "https://script.google.com/macros/s/AKfycbxqLSIrJ4f8ntZOvMB96Ul2R-EBuAGcijC93LVxtLhEgcLOGgmwZ8pzFc2RtAW_ZHkJpQ/exec";
-const ADMIN_TOKEN      = "dinax-9327"; // must match Apps Script
+const ADMIN_TOKEN      = "dinax-9327";
 
-// Service catalog: base price + base duration (minutes)
+// Services: base price + base duration (minutes)
 const SERVICES = {
   "acrylic-short":  { name:"Acrylic • Short Full Set",   price:45, duration:90 },
   "acrylic-medium": { name:"Acrylic • Medium Full Set",  price:50, duration:105 },
@@ -22,7 +22,6 @@ const serviceEl  = document.getElementById('service-select');
 const soakEl     = document.getElementById('soakoff');
 const dateEl     = document.getElementById('date');
 const baseEl     = document.getElementById('baseprice');
-const totalEl    = document.getElementById('totalprice');
 const slotsEl    = document.getElementById('slots');
 const timeEl     = document.getElementById('time');
 const refreshBtn = document.getElementById('refresh-slots');
@@ -37,28 +36,23 @@ function getSelectedService(){
   return {
     id,
     name: svc.name,
-    price: svc.price,
+    basePrice: svc.price,
     duration: svc.duration + soakExtra,
     soak: soakEl.checked
   };
 }
 
-function updatePrices(){
+// Base Price shows base + $10 when Soak Off is checked
+function updateBasePrice(){
   const svc = getSelectedService();
-  if (!svc){
-    baseEl.value = '';
-    totalEl.value = '';
-    return;
-  }
-  const base  = svc.price;
-  const total = svc.soak ? base + SOAK_OFF_PRICE : base;
-  baseEl.value  = `$${base}`;
-  totalEl.value = `$${total}`;
+  if (!svc){ baseEl.value = ''; return; }
+  const total = svc.basePrice + (svc.soak ? SOAK_OFF_PRICE : 0);
+  baseEl.value = `$${total}`;
 }
 
-serviceEl?.addEventListener('change', ()=>{ updatePrices(); loadSlots(); });
-soakEl?.addEventListener('change', ()=>{ updatePrices(); loadSlots(); });
-dateEl?.addEventListener('change', loadSlots);
+serviceEl?.addEventListener('change', ()=>{ updateBasePrice(); loadSlots(); });
+soakEl?.addEventListener('change',  ()=>{ updateBasePrice(); loadSlots(); });
+dateEl?.addEventListener('change',  loadSlots);
 refreshBtn?.addEventListener('click', loadSlots);
 
 async function loadSlots(){
@@ -102,6 +96,7 @@ async function loadSlots(){
       slotsEl.appendChild(b);
     });
   }catch(err){
+    console.error(err);
     slotsEl.innerHTML = `<p class="muted">Couldn’t load availability. Try again.</p>`;
   }
 }
@@ -115,8 +110,7 @@ form?.addEventListener('submit', async (e) => {
   if(!dateEl.value){ statusEl.textContent = "Pick a date."; return; }
   if(!timeEl.value){ statusEl.textContent = "Pick a time."; return; }
 
-  const base  = svc.price;
-  const total = svc.soak ? base + SOAK_OFF_PRICE : base;
+  const totalPrice = svc.basePrice + (svc.soak ? SOAK_OFF_PRICE : 0);
 
   const data = Object.fromEntries(new FormData(form).entries());
   const payload = {
@@ -124,8 +118,8 @@ form?.addEventListener('submit', async (e) => {
     service: svc.name,
     date: dateEl.value,
     time: timeEl.value,
-    basePrice: base,
-    totalPrice: total,             // <-- send total including soak-off
+    basePrice: totalPrice,          // shows total in the Base Price field
+    totalPrice: totalPrice,         // saved to sheet
     soakOff: svc.soak ? "Yes" : "No",
     computedDurationMin: svc.duration
   };
@@ -141,7 +135,7 @@ form?.addEventListener('submit', async (e) => {
     if (json.ok) {
       statusEl.textContent = "Thanks! Dina will confirm your time by DM/text.";
       form.reset();
-      baseEl.value=''; totalEl.value=''; timeEl.value=''; slotsEl.innerHTML='';
+      baseEl.value=''; timeEl.value=''; slotsEl.innerHTML='';
     } else {
       statusEl.textContent = json.error || "Something went wrong. Please try again.";
     }
