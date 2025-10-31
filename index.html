@@ -139,12 +139,12 @@
             <label>Service
               <select id="service-select" name="service" required>
                 <option value="">Select a service…</option>
-                <option value="acrylic-short" data-price="45">Acrylic • Short Full Set — $45</option>
+                <option value="acrylic-short"  data-price="45">Acrylic • Short Full Set — $45</option>
                 <option value="acrylic-medium" data-price="50">Acrylic • Medium Full Set — $50</option>
-                <option value="acrylic-long" data-price="55">Acrylic • Long Full Set — $55</option>
-                <option value="builder-short" data-price="40">Builder Gel • Short — $40</option>
+                <option value="acrylic-long"   data-price="55">Acrylic • Long Full Set — $55</option>
+                <option value="builder-short"  data-price="40">Builder Gel • Short — $40</option>
                 <option value="builder-medium" data-price="45">Builder Gel • Medium — $45</option>
-                <option value="builder-long" data-price="50">Builder Gel • Long — $50</option>
+                <option value="builder-long"   data-price="50">Builder Gel • Long — $50</option>
               </select>
             </label>
           </div>
@@ -152,7 +152,7 @@
           <div class="row">
             <label class="checkbox">
               <input type="checkbox" id="soakoff" name="soakoff" />
-              I need a Soak Off (+$10, adds +15 min). *Must be selected in advance.*
+              I need a <strong>Soak Off</strong> (+$10, adds +15 min). <em>Must be selected in advance.</em>
             </label>
           </div>
 
@@ -160,6 +160,11 @@
             <label>Date<input id="date" name="date" type="date" required/></label>
             <label>Base Price
               <input id="baseprice" type="text" readonly placeholder="$0"/>
+            </label>
+          </div>
+          <div class="row">
+            <label class="total">Total (includes add-ons)
+              <input id="totalprice" type="text" readonly placeholder="$0"/>
             </label>
           </div>
 
