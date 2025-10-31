@@ -79,6 +79,21 @@ input,select,textarea{margin-top:6px;padding:12px 10px;border:1px solid #e6d7cf;
 .footer{padding:28px 0;border-top:1px solid #eadfd7;background:var(--cream)}
 .footer-inner{display:flex;align-items:center;justify-content:space-between}
 
+/* Bigger, prettier checkbox */
+.checkbox input[type="checkbox"]{
+  width: 22px;
+  height: 22px;
+  accent-color: var(--rose);
+  margin-right: 8px;
+  transform: translateY(2px);
+}
+
+/* Total field emphasis */
+.total {
+  font-weight: 800;
+}
+
+
 @media(max-width:900px){
   .hero-inner{grid-template-columns:1fr}
   .grid{grid-template-columns:1fr 1fr}
