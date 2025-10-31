@@ -61,12 +61,34 @@ nav a{margin-left:18px;color:var(--cocoa);text-decoration:none}
 .form .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}
 label{display:flex;flex-direction:column;font-weight:600;font-size:14px}
 input,select,textarea{margin-top:6px;padding:12px 10px;border:1px solid #e6d7cf;border-radius:12px;background:#fff;font-size:16px}
-.checkbox{font-weight:600;display:flex;align-items:center;gap:10px}
-/* Bigger, prettier checkbox */
-.checkbox input[type="checkbox"]{
-  width:22px;height:22px;margin:0;accent-color:var(--rose);transform:translateY(1px);
-}
 .status{margin-top:12px;min-height:22px}
+
+/* === Cute Soak-Off pill === */
+.soak{display:flex;justify-content:center;margin:6px 0 14px}
+.soak-card{position:relative;cursor:pointer}
+.soak-card input{position:absolute;inset:0;opacity:0;pointer-events:none}
+.soak-visual{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px;border-radius:18px;
+  background:linear-gradient(180deg,#fff,#FFF7F6);
+  border:1px solid #eadfd7;
+  box-shadow:0 8px 20px rgba(0,0,0,.05);
+  transition:box-shadow .15s ease, transform .06s ease, border-color .15s ease, background .2s ease;
+}
+.soak-visual:hover{transform:translateY(-1px);box-shadow:0 12px 26px rgba(0,0,0,.07)}
+.soak-icon{
+  display:grid;place-items:center;width:36px;height:36px;border-radius:12px;
+  background:var(--cream);border:1px solid #eadfd7;
+}
+.soak-copy{display:flex;flex-direction:column;line-height:1.2}
+.soak-copy strong{font-family:"Playfair Display",serif;color:var(--mocha);font-size:16px}
+.soak-copy small{color:#7f665a;font-weight:600}
+.soak-toggle{margin-left:auto;position:relative;width:52px;height:28px;flex:0 0 auto;border-radius:999px;background:#f7f1ee;border:1px solid #eadfd7}
+.soak-toggle .dot{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;border:1px solid #eadfd7;transition:transform .18s ease}
+.soak-card input:checked + .soak-visual{background:linear-gradient(180deg,var(--blush),#fff);border-color:#f0c6cf}
+.soak-card input:checked + .soak-visual .soak-toggle{background:var(--rose);border-color:#e9b4be}
+.soak-card input:checked + .soak-visual .soak-toggle .dot{transform:translateX(24px)}
+.soak-card:focus-within .soak-visual{box-shadow:0 0 0 3px rgba(231,169,178,.35),0 8px 22px rgba(0,0,0,.06)}
 
 .slot-wrap{margin:8px 0 14px;border:1px dashed #eadfd7;border-radius:12px;padding:12px;background:#fff}
 .slot-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
@@ -79,7 +101,6 @@ input,select,textarea{margin-top:6px;padding:12px 10px;border:1px solid #e6d7cf;
 .slot-btn.selected{background:var(--blush)}
 
 .policies{display:grid;gap:8px;padding-left:18px}
-.total{font-weight:800}
 
 .footer{padding:28px 0;border-top:1px solid #eadfd7;background:var(--cream)}
 .footer-inner{display:flex;align-items:center;justify-content:space-between}
