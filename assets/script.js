@@ -1,4 +1,4 @@
-// NEW live Apps Script URL + token:
+// LIVE Apps Script endpoint + token
 const BOOKING_ENDPOINT = "https://script.google.com/macros/s/AKfycbxqLSIrJ4f8ntZOvMB96Ul2R-EBuAGcijC93LVxtLhEgcLOGgmwZ8pzFc2RtAW_ZHkJpQ/exec";
 const ADMIN_TOKEN      = "dinax-9327"; // must match Apps Script
 
@@ -11,18 +11,21 @@ const SERVICES = {
   "builder-medium": { name:"Builder Gel • Medium",       price:45, duration:90 },
   "builder-long":   { name:"Builder Gel • Long",         price:50, duration:105 },
 };
-const SOAK_OFF_EXTRA_MIN = 15;
 
-const form      = document.getElementById('booking-form');
-const statusEl  = document.getElementById('form-status');
-const yearEl    = document.getElementById('year');
-const serviceEl = document.getElementById('service-select');
-const soakEl    = document.getElementById('soakoff');
-const dateEl    = document.getElementById('date');
-const baseEl    = document.getElementById('baseprice');
-const slotsEl   = document.getElementById('slots');
-const timeEl    = document.getElementById('time');
-const refreshBtn= document.getElementById('refresh-slots');
+const SOAK_OFF_EXTRA_MIN = 15;
+const SOAK_OFF_PRICE     = 10;
+
+const form       = document.getElementById('booking-form');
+const statusEl   = document.getElementById('form-status');
+const yearEl     = document.getElementById('year');
+const serviceEl  = document.getElementById('service-select');
+const soakEl     = document.getElementById('soakoff');
+const dateEl     = document.getElementById('date');
+const baseEl     = document.getElementById('baseprice');
+const totalEl    = document.getElementById('totalprice');
+const slotsEl    = document.getElementById('slots');
+const timeEl     = document.getElementById('time');
+const refreshBtn = document.getElementById('refresh-slots');
 
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
@@ -40,12 +43,23 @@ function getSelectedService(){
   };
 }
 
-function updateBasePrice(){
+function updatePrices(){
   const svc = getSelectedService();
-  baseEl.value = svc ? `$${svc.price}` : '';
+  if (!svc){
+    baseEl.value = '';
+    totalEl.value = '';
+    return;
+  }
+  const base  = svc.price;
+  const total = svc.soak ? base + SOAK_OFF_PRICE : base;
+  baseEl.value  = `$${base}`;
+  totalEl.value = `$${total}`;
 }
-serviceEl?.addEventListener('change', updateBasePrice);
-soakEl?.addEventListener('change', updateBasePrice);
+
+serviceEl?.addEventListener('change', ()=>{ updatePrices(); loadSlots(); });
+soakEl?.addEventListener('change', ()=>{ updatePrices(); loadSlots(); });
+dateEl?.addEventListener('change', loadSlots);
+refreshBtn?.addEventListener('click', loadSlots);
 
 async function loadSlots(){
   slotsEl.innerHTML = `<p class="muted">Loading times…</p>`;
@@ -92,11 +106,6 @@ async function loadSlots(){
   }
 }
 
-dateEl?.addEventListener('change', loadSlots);
-serviceEl?.addEventListener('change', loadSlots);
-soakEl?.addEventListener('change', loadSlots);
-refreshBtn?.addEventListener('click', loadSlots);
-
 form?.addEventListener('submit', async (e) => {
   e.preventDefault();
   statusEl.textContent = "";
@@ -106,13 +115,17 @@ form?.addEventListener('submit', async (e) => {
   if(!dateEl.value){ statusEl.textContent = "Pick a date."; return; }
   if(!timeEl.value){ statusEl.textContent = "Pick a time."; return; }
 
+  const base  = svc.price;
+  const total = svc.soak ? base + SOAK_OFF_PRICE : base;
+
   const data = Object.fromEntries(new FormData(form).entries());
   const payload = {
     ...data,
     service: svc.name,
     date: dateEl.value,
     time: timeEl.value,
-    basePrice: svc.price,
+    basePrice: base,
+    totalPrice: total,             // <-- send total including soak-off
     soakOff: svc.soak ? "Yes" : "No",
     computedDurationMin: svc.duration
   };
@@ -128,7 +141,7 @@ form?.addEventListener('submit', async (e) => {
     if (json.ok) {
       statusEl.textContent = "Thanks! Dina will confirm your time by DM/text.";
       form.reset();
-      baseEl.value=''; timeEl.value=''; slotsEl.innerHTML='';
+      baseEl.value=''; totalEl.value=''; timeEl.value=''; slotsEl.innerHTML='';
     } else {
       statusEl.textContent = json.error || "Something went wrong. Please try again.";
     }
