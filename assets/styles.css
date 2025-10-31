@@ -61,7 +61,11 @@ nav a{margin-left:18px;color:var(--cocoa);text-decoration:none}
 .form .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}
 label{display:flex;flex-direction:column;font-weight:600;font-size:14px}
 input,select,textarea{margin-top:6px;padding:12px 10px;border:1px solid #e6d7cf;border-radius:12px;background:#fff;font-size:16px}
-.checkbox{font-weight:600}
+.checkbox{font-weight:600;display:flex;align-items:center;gap:10px}
+/* Bigger, prettier checkbox */
+.checkbox input[type="checkbox"]{
+  width:22px;height:22px;margin:0;accent-color:var(--rose);transform:translateY(1px);
+}
 .status{margin-top:12px;min-height:22px}
 
 .slot-wrap{margin:8px 0 14px;border:1px dashed #eadfd7;border-radius:12px;padding:12px;background:#fff}
@@ -75,24 +79,10 @@ input,select,textarea{margin-top:6px;padding:12px 10px;border:1px solid #e6d7cf;
 .slot-btn.selected{background:var(--blush)}
 
 .policies{display:grid;gap:8px;padding-left:18px}
+.total{font-weight:800}
 
 .footer{padding:28px 0;border-top:1px solid #eadfd7;background:var(--cream)}
 .footer-inner{display:flex;align-items:center;justify-content:space-between}
-
-/* Bigger, prettier checkbox */
-.checkbox input[type="checkbox"]{
-  width: 22px;
-  height: 22px;
-  accent-color: var(--rose);
-  margin-right: 8px;
-  transform: translateY(2px);
-}
-
-/* Total field emphasis */
-.total {
-  font-weight: 800;
-}
-
 
 @media(max-width:900px){
   .hero-inner{grid-template-columns:1fr}
