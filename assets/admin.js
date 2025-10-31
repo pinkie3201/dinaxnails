@@ -1,4 +1,4 @@
-const ENDPOINT = "https://script.google.com/macros/s/AKfycbx1EmMSYXygT8HLcNJGU4TW8jiLMhHl7MRvVdSPUjGH6PUQNYBzt_CJq2-DiPNtQsCCpw/exec";
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbxqLSIrJ4f8ntZOvMB96Ul2R-EBuAGcijC93LVxtLhEgcLOGgmwZ8pzFc2RtAW_ZHkJpQ/exec";
 
 const listEl = document.getElementById('list');
 const statusEl = document.getElementById('admin-status');
@@ -19,12 +19,13 @@ async function loadPending(){
     if(!json.ok) throw new Error(json.error||'Error');
     statusEl.textContent = `${json.items.length} pending request(s).`;
     json.items.forEach((r) => {
+      const ig = r.igHandle ? `@${String(r.igHandle).replace(/^@/,'')}` : '';
       const card = document.createElement('div');
       card.className = 'card';
       card.innerHTML = `
         <h4>${r.name||'Unknown'} — ${r.service||''}</h4>
         <p class="muted">${r.date||''} ${r.time||''} • ${r.basePrice ? ('$'+r.basePrice) : ''} • SoakOff: ${r.soakOff||'No'}</p>
-        <p>${r.phone||''} • ${r.email||''}</p>
+        <p>${r.phone||''} • ${ig}</p>
         <p>${(r.notes||'').replace(/\n/g,'<br>')}</p>
         <div class="form" style="padding:12px;margin-top:10px;">
           <label>Admin Notes<textarea rows="2" class="admin-notes"></textarea></label>
