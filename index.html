@@ -5,62 +5,52 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>dinaxnails • neutral glam, clean sets</title>
 
-  <!-- Brand fonts (optional; safe fallbacks) -->
+  <!-- Fonts (optional) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
 
-  <!-- Your site styles (cache-busted) -->
+  <!-- Your stylesheet (cache-busted) -->
   <link rel="stylesheet" href="assets/styles.css?v=retro1" />
 
   <style>
     :root{
-      --bg:#f7f1ec;           /* cream */
-      --card:#ffffff;         /* white */
-      --ink:#3f2e2b;          /* mocha text */
-      --muted:#8b7d77;
-      --line:#eadfda;
-      --accent:#e9b7b6;       /* soft pink */
-      --accent-ink:#5f3a36;
-      --chip:#fff4f3;
+      --bg:#f7f1ec; --card:#ffffff; --ink:#3f2e2b; --muted:#8b7d77;
+      --line:#eadfda; --accent:#e9b7b6; --accent-ink:#5f3a36; --chip:#fff4f3;
     }
     html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif}
     .wrap{width:min(1100px,92%);margin:0 auto}
     header{padding:28px 0}
-    nav{display:flex;justify-content:space-between;align-items:center;gap:16px}
+    nav{display:flex;justify-content:space-between;align-items:center}
     .brand{font-family:"Playfair Display",serif;font-weight:600;letter-spacing:.2px}
     .brand a{text-decoration:none;color:var(--ink);font-size:20px}
-    .navlinks a{color:var(--ink);text-decoration:none;margin-left:16px;font-size:14px;opacity:.85}
-    .hero{padding:28px 0 18px}
-    h1{font-family:"Playfair Display",serif;font-weight:600;margin:0 0 8px}
+    .navlinks a{color:var(--ink);opacity:.85;text-decoration:none;margin-left:16px;font-size:14px}
+    .hero{padding:24px 0 8px}
+    h1{font-family:"Playfair Display",serif;font-weight:600;margin:0 0 6px}
     .muted{color:var(--muted)}
+    .section-title{margin:22px 0 10px;font-weight:700}
     .grid{display:grid;gap:14px}
     .cards{grid-template-columns:repeat(3,minmax(0,1fr))}
     .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
-    .section-title{margin:22px 0 10px;font-size:18px;font-weight:700}
-    .service-chip{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
-    .pill{display:inline-flex;align-items:center;gap:8px;padding:.5rem .8rem;border:1px solid var(--line);border-radius:999px;background:#fff}
-    .chip{display:inline-flex;align-items:center;padding:.5rem .8rem;border:1px solid var(--line);border-radius:999px;background:#fff;cursor:pointer}
-    .chip.active{background:#fdecec;border-color:#e8c7c7}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:var(--chip);border-radius:999px;padding:.55rem .9rem;cursor:pointer}
-    .btn.pink{background:var(--accent);color:var(--accent-ink);border-color:#e6c8c7}
+    .service-chip{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px}
     .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
     label{display:block;font-size:13px;margin:6px 0 6px}
     input,select,textarea{width:100%;box-sizing:border-box;border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;font:inherit;color:var(--ink)}
     input[readonly]{background:#faf6f3}
     textarea{min-height:110px;resize:vertical}
-    .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .three{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
     .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     .time-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
-    .note{font-size:12px;color:var(--muted)}
-    footer{padding:28px 0;color:var(--muted);font-size:12px}
-    /* Soak Off toggle block */
+    .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--chip);border-radius:999px;padding:.55rem .9rem;cursor:pointer}
+    .btn.pink{background:var(--accent);color:var(--accent-ink);border-color:#e6c8c7}
+    .chip{display:inline-flex;align-items:center;padding:.5rem .8rem;border:1px solid var(--line);border-radius:999px;background:#fff;cursor:pointer}
+    .chip.active{background:#fdecec;border-color:#e8c7c7}
+    /* Soak Off toggle */
     .soak-card{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
     .toggle{appearance:none;width:42px;height:24px;border-radius:999px;background:#e8dcd8;position:relative;outline:none;cursor:pointer;border:1px solid var(--line)}
     .toggle:checked{background:#f3cfd0;border-color:#e7b9bb}
     .toggle::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:all .18s ease}
     .toggle:checked::after{left:21px}
+    footer{padding:28px 0;color:var(--muted);font-size:12px}
   </style>
 </head>
 <body>
@@ -118,7 +108,7 @@
       </div>
     </section>
 
-    <!-- GALLERY (placeholders) -->
+    <!-- GALLERY -->
     <section id="gallery" style="margin:22px 0">
       <div class="section-title">Gallery</div>
       <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
@@ -135,30 +125,30 @@
       <form id="booking-form" class="panel">
         <div class="row">
           <div>
-            <label>Full Name</label>
+            <label for="name">Full Name</label>
             <input id="name" name="name" placeholder="Your name" />
           </div>
           <div>
-            <label>Phone</label>
+            <label for="phone">Phone</label>
             <input id="phone" name="phone" placeholder="(555) 555-5555" />
           </div>
         </div>
 
         <div class="row">
           <div>
-            <label>Instagram Handle</label>
+            <label for="ig">Instagram Handle</label>
             <input id="ig" name="igHandle" placeholder="@yourhandle" />
           </div>
           <div>
-            <label>Service</label>
+            <label for="service-select">Service</label>
             <select id="service-select" name="service">
-              <!-- script.js can also populate these automatically -->
-              <option value="acrylic-short">Acrylic • Short Full Set — $45</option>
-              <option value="acrylic-medium">Acrylic • Medium Full Set — $50</option>
-              <option value="acrylic-long">Acrylic • Long Full Set — $55</option>
-              <option value="builder-short">Builder Gel • Short — $40</option>
-              <option value="builder-medium">Builder Gel • Medium — $45</option>
-              <option value="builder-long">Builder Gel • Long — $50</option>
+              <option value="" selected disabled>Select a service…</option>
+              <option>Acrylic • Short Full Set — $45</option>
+              <option>Acrylic • Medium Full Set — $50</option>
+              <option>Acrylic • Long Full Set — $55</option>
+              <option>Builder Gel • Short — $40</option>
+              <option>Builder Gel • Medium — $45</option>
+              <option>Builder Gel • Long — $50</option>
             </select>
           </div>
         </div>
@@ -166,20 +156,20 @@
         <div class="soak-card" style="margin:8px 0 10px">
           <div>
             <div style="font-weight:700">Soak Off</div>
-            <div class="note">+ $10 • +15 min • must be selected in advance</div>
+            <div class="muted" style="font-size:12px">+ $10 • +15 min • must be selected in advance</div>
           </div>
           <input id="soakoff" class="toggle" type="checkbox" />
         </div>
 
         <div class="row">
           <div>
-            <label>Date</label>
-            <!-- keep text so users can type 11/03/2025; script converts to ISO -->
-            <input id="date-input" name="date" placeholder="MM/DD/YYYY" />
+            <label for="date-input">Date</label>
+            <!-- calendar picker: type=date -->
+            <input id="date-input" name="date" type="date" />
           </div>
           <div>
-            <label>Base Price</label>
-            <input id="base-price" name="basePrice" value="$45" readonly />
+            <label for="base-price">Base Price</label>
+            <input id="base-price" name="basePrice" value="$0" readonly />
           </div>
         </div>
 
@@ -188,17 +178,17 @@
           <button type="button" id="refresh-times" class="btn">Refresh</button>
         </div>
         <div id="times" class="panel" style="padding:12px">
-          <div class="muted">Select a service and date, then click Refresh.</div>
+          <div class="muted">Select a service and date to see times.</div>
         </div>
 
         <div style="margin-top:10px">
-          <label>Notes (inspo links, allergies)</label>
+          <label for="notes">Notes (inspo links, allergies)</label>
           <textarea id="notes" name="notes" placeholder="Paste IG/TikTok links or notes"></textarea>
         </div>
 
         <div style="margin-top:12px">
           <button type="button" class="btn pink" id="request-btn">Request this time</button>
-          <span class="note" style="margin-left:8px">Nothing is booked until Dina approves.</span>
+          <span class="muted" style="margin-left:8px;font-size:12px">Nothing is booked until Dina approves.</span>
         </div>
       </form>
     </section>
@@ -209,7 +199,7 @@
       <ul class="muted" style="margin-top:8px">
         <li>Deposit holds your spot (sent after approval).</li>
         <li>24-hour reschedule window; 10-minute grace period.</li>
-        <li>Soak Off must be selected during booking (+ adds 15 minutes).</li>
+        <li>Soak Off must be selected during booking (adds 15 minutes).</li>
         <li>Please arrive with bare nails unless you booked removal.</li>
       </ul>
     </section>
@@ -219,7 +209,7 @@
     <div class="wrap">© 2025 dinaxnails • San Diego • <a class="muted" href="https://instagram.com" target="_blank" rel="noreferrer">Instagram</a></div>
   </footer>
 
-  <!-- Your booking logic (cache-busted) -->
+  <!-- Booking logic (cache-busted) -->
   <script src="assets/script.js?v=retro3"></script>
 </body>
 </html>
