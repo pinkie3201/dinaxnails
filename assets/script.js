@@ -1,5 +1,6 @@
 // LIVE Apps Script endpoint (your latest)
-const BOOKING_ENDPOINT = "https://script.google.com/macros/s/AKfycbyiiurpgab-BuNxF0A_uqRE53tFxYl6iVok4WEkn_6a8mJGCNgqqK_fKhiCbJbkjUS8mg/exec";
+const BOOKING_ENDPOINT = "https://script.google.com/macros/s/AKfycbzu8UUsLL5IwcDNNCG8eJohs2O5H0pdQ1tlQ8fGqswS8SwyTzdBRWieTKnD63jPGJXmZg/exec";
+
 
 // Base prices + base durations (min)
 const SERVICES = {
