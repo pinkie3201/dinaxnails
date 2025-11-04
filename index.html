@@ -5,59 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>dinaxnails • neutral glam, clean sets</title>
 
-  <!-- Fonts (optional) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
 
-  <!-- Your stylesheet (cache-busted) -->
-  <link rel="stylesheet" href="assets/styles.css?v=retro1" />
-
-  <style>
-    :root{
-      --bg:#f7f1ec; --card:#ffffff; --ink:#3f2e2b; --muted:#8b7d77;
-      --line:#eadfda; --accent:#e9b7b6; --accent-ink:#5f3a36; --chip:#fff4f3;
-    }
-    html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif}
-    .wrap{width:min(1100px,92%);margin:0 auto}
-    header{padding:28px 0}
-    nav{display:flex;justify-content:space-between;align-items:center}
-    .brand{font-family:"Playfair Display",serif;font-weight:600;letter-spacing:.2px}
-    .brand a{text-decoration:none;color:var(--ink);font-size:20px}
-    .navlinks a{color:var(--ink);opacity:.85;text-decoration:none;margin-left:16px;font-size:14px}
-    .hero{padding:24px 0 8px}
-    h1{font-family:"Playfair Display",serif;font-weight:600;margin:0 0 6px}
-    .muted{color:var(--muted)}
-    .section-title{margin:22px 0 10px;font-weight:700}
-    .grid{display:grid;gap:14px}
-    .cards{grid-template-columns:repeat(3,minmax(0,1fr))}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
-    .service-chip{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px}
-    .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
-    label{display:block;font-size:13px;margin:6px 0 6px}
-    input,select,textarea{width:100%;box-sizing:border-box;border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;font:inherit;color:var(--ink)}
-    input[readonly]{background:#faf6f3}
-    textarea{min-height:110px;resize:vertical}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .time-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
-    .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--chip);border-radius:999px;padding:.55rem .9rem;cursor:pointer}
-    .btn.pink{background:var(--accent);color:var(--accent-ink);border-color:#e6c8c7}
-    .chip{display:inline-flex;align-items:center;padding:.5rem .8rem;border:1px solid var(--line);border-radius:999px;background:#fff;cursor:pointer}
-    .chip.active{background:#fdecec;border-color:#e8c7c7}
-    /* Soak Off toggle */
-    .soak-card{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
-    .toggle{appearance:none;width:42px;height:24px;border-radius:999px;background:#e8dcd8;position:relative;outline:none;cursor:pointer;border:1px solid var(--line)}
-    .toggle:checked{background:#f3cfd0;border-color:#e7b9bb}
-    .toggle::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:all .18s ease}
-    .toggle:checked::after{left:21px}
-    footer{padding:28px 0;color:var(--muted);font-size:12px}
-  </style>
+  <!-- cache-busted -->
+  <link rel="stylesheet" href="assets/styles.css?v=retro2" />
 </head>
 <body>
   <header>
     <div class="wrap">
       <nav>
-        <div class="brand"><a href="./">dinaxnails</a></div>
+        <div class="brand"><a href="#" id="brand-admin">dinaxnails</a></div>
         <div class="navlinks">
           <a href="#services">Services</a>
           <a href="#gallery">Gallery</a>
@@ -73,7 +32,6 @@
   </header>
 
   <main class="wrap">
-    <!-- SERVICES -->
     <section id="services" style="margin:8px 0 20px">
       <div class="section-title">Services & Base Prices</div>
       <div class="muted" style="font-size:13px;margin-bottom:10px">
@@ -108,16 +66,13 @@
       </div>
     </section>
 
-    <!-- GALLERY -->
     <section id="gallery" style="margin:22px 0">
       <div class="section-title">Gallery</div>
-      <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
-        <img src="https://images.unsplash.com/photo-1610992015732-0e006c2aa6f1?q=80&w=1200&auto=format&fit=crop" alt="nails" style="width:100%;border-radius:14px;border:1px solid var(--line)">
-        <img src="https://images.unsplash.com/photo-1603575449027-b62d09f728d9?q=80&w=1200&auto=format&fit=crop" alt="nails" style="width:100%;border-radius:14px;border:1px solid var(--line)">
+      <div class="grid" id="gallery-grid" style="grid-template-columns:1fr 1fr;gap:12px">
+        <!-- optional: dynamic gallery loader can populate this -->
       </div>
     </section>
 
-    <!-- BOOKING -->
     <section id="book" style="margin:26px 0 30px">
       <div class="section-title">Book an Appointment</div>
       <p class="muted" style="margin-top:0">Pick a service, select a date, choose a time. Dina reviews and confirms your request.</p>
@@ -142,13 +97,13 @@
           <div>
             <label for="service-select">Service</label>
             <select id="service-select" name="service">
-              <option value="" selected disabled>Select a service…</option>
-              <option>Acrylic • Short Full Set — $45</option>
-              <option>Acrylic • Medium Full Set — $50</option>
-              <option>Acrylic • Long Full Set — $55</option>
-              <option>Builder Gel • Short — $40</option>
-              <option>Builder Gel • Medium — $45</option>
-              <option>Builder Gel • Long — $50</option>
+              <option value="" selected>Select a service</option>
+              <option value="acrylic-short">Acrylic • Short Full Set — $45</option>
+              <option value="acrylic-medium">Acrylic • Medium Full Set — $50</option>
+              <option value="acrylic-long">Acrylic • Long Full Set — $55</option>
+              <option value="builder-short">Builder Gel • Short — $40</option>
+              <option value="builder-medium">Builder Gel • Medium — $45</option>
+              <option value="builder-long">Builder Gel • Long — $50</option>
             </select>
           </div>
         </div>
@@ -156,7 +111,7 @@
         <div class="soak-card" style="margin:8px 0 10px">
           <div>
             <div style="font-weight:700">Soak Off</div>
-            <div class="muted" style="font-size:12px">+ $10 • +15 min • must be selected in advance</div>
+            <div class="note">+ $10 • +15 min • must be selected in advance</div>
           </div>
           <input id="soakoff" class="toggle" type="checkbox" />
         </div>
@@ -164,7 +119,6 @@
         <div class="row">
           <div>
             <label for="date-input">Date</label>
-            <!-- calendar picker: type=date -->
             <input id="date-input" name="date" type="date" />
           </div>
           <div>
@@ -173,12 +127,12 @@
           </div>
         </div>
 
-        <div style="margin:8px 0 6px;display:flex;align-items:center;justify-content:space-between;gap:10px">
+        <div class="times-head">
           <div style="font-weight:600">Available times</div>
           <button type="button" id="refresh-times" class="btn">Refresh</button>
         </div>
         <div id="times" class="panel" style="padding:12px">
-          <div class="muted">Select a service and date to see times.</div>
+          <div class="muted">Select a service and date, then click Refresh.</div>
         </div>
 
         <div style="margin-top:10px">
@@ -188,18 +142,17 @@
 
         <div style="margin-top:12px">
           <button type="button" class="btn pink" id="request-btn">Request this time</button>
-          <span class="muted" style="margin-left:8px;font-size:12px">Nothing is booked until Dina approves.</span>
+          <span class="note" style="margin-left:8px">Nothing is booked until Dina approves.</span>
         </div>
       </form>
     </section>
 
-    <!-- POLICIES -->
     <section id="policies" style="margin:28px 0 40px">
       <div class="section-title">Policies</div>
       <ul class="muted" style="margin-top:8px">
         <li>Deposit holds your spot (sent after approval).</li>
         <li>24-hour reschedule window; 10-minute grace period.</li>
-        <li>Soak Off must be selected during booking (adds 15 minutes).</li>
+        <li>Soak Off must be selected during booking (+ adds 15 minutes).</li>
         <li>Please arrive with bare nails unless you booked removal.</li>
       </ul>
     </section>
@@ -209,8 +162,44 @@
     <div class="wrap">© 2025 dinaxnails • San Diego • <a class="muted" href="https://instagram.com" target="_blank" rel="noreferrer">Instagram</a></div>
   </footer>
 
-  <!-- Booking logic (cache-busted) -->
-  <script src="assets/script.js?v=retro3"></script>
+  <!-- main booking JS (hardened selectors) -->
+  <script src="assets/script.js?v=retro4"></script>
+
+  <!-- tiny admin PIN door on the logo -->
+  <script>
+    (function(){
+      const ADMIN_PIN = "9327"; // 4-digit code
+      document.getElementById("brand-admin")?.addEventListener("click", (e)=>{
+        e.preventDefault();
+        const pin = prompt("Admin PIN");
+        if(pin === ADMIN_PIN){ window.location.href = "admin.html"; }
+        else if (pin) alert("Wrong code.");
+      });
+    })();
+  </script>
+
+  <!-- optional dynamic gallery loader (safe to keep or remove) -->
+  <script>
+  (async function(){
+    const ENDPOINT = "https://script.google.com/macros/s/AKfycbzu8UUsLL5IwcDNNCG8eJohs2O5H0pdQ1tlQ8fGqswS8SwyTzdBRWieTKnD63jPGJXmZg/exec";
+    const g=document.getElementById("gallery-grid");
+    if(!g) return;
+    try{
+      const r=await fetch(ENDPOINT + "?token=dinax-9327&listImages=1");
+      const j=await r.json();
+      if(!j.ok || !(j.items||[]).length){ g.innerHTML=`<img src="https://images.unsplash.com/photo-1610992015732-0e006c2aa6f1?q=80&w=1200&auto=format&fit=crop" class="gallery-img" alt=""><img src="https://images.unsplash.com/photo-1603575449027-b62d09f728d9?q=80&w=1200&auto=format&fit=crop" class="gallery-img" alt="">`; return; }
+      g.innerHTML="";
+      (j.items||[]).slice(0,12).forEach(it=>{
+        const img=document.createElement("img");
+        img.src = it.publicUrl; img.alt="nails"; img.className="gallery-img";
+        g.appendChild(img);
+      });
+    }catch(e){
+      // fallback static images
+      g.innerHTML=`<img src="https://images.unsplash.com/photo-1610992015732-0e006c2aa6f1?q=80&w=1200&auto=format&fit=crop" class="gallery-img" alt=""><img src="https://images.unsplash.com/photo-1603575449027-b62d09f728d9?q=80&w=1200&auto=format&fit=crop" class="gallery-img" alt="">`;
+    }
+  })();
+  </script>
 </body>
 </html>
 
