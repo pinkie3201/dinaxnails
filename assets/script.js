@@ -1,7 +1,7 @@
 /* DinaX — front-end only
  * Loads Gallery from GAS Content.gallery
  * (Square booking is an iframe; nothing to init)
- */
+ 
 const CONTENT_ENDPOINT = "https://script.google.com/macros/s/AKfycbzu8UUsLL5IwcDNNCG8eJohs2O5H0pdQ1tlQ8fGqswS8SwyTzdBRWieTKnD63jPGJXmZg/exec";
 
 async function postForm(action, payload){
@@ -32,3 +32,4 @@ async function loadGallery(){
   }catch(e){ console.warn("Gallery load failed", e); }
 }
 document.addEventListener("DOMContentLoaded", loadGallery);
+*/
