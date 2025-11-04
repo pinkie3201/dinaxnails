@@ -3,48 +3,53 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>dinaxnails • Admin</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <title>DinaX Admin</title>
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
-<body>
-  <header class="nav"><div class="wrap" style="display:flex;justify-content:space-between;align-items:center">
-    <a class="logo" href="/">dinaxnails</a>
-    <nav><a class="btn" href="/">Back to site</a></nav>
-  </div></header>
+<body class="container">
+  <header class="card" style="margin-bottom:16px;">
+    <a class="btn" href="index.html">← Back to site</a>
+    <h2 style="margin:0;">Admin: Site Content</h2>
+    <p class="muted" style="margin:6px 0 0;">Edit prices & gallery. Changes are instant.</p>
+  </header>
 
-  <main class="wrap" style="margin:20px 0 40px">
-    <h2>Pending Requests</h2>
-    <div class="panel" style="margin-bottom:16px;">
-      <div class="row">
-        <label>Admin Token<input id="token" placeholder="enter your admin token" value="dinax-9327"/></label>
-        <div style="display:flex;align-items:flex-end;gap:8px">
-          <button class="btn" id="load">Load Pending</button>
+  <main class="grid-2">
+    <section class="card">
+      <h3 style="margin-top:0;">Prices</h3>
+      <p class="muted">Paste HTML (simple list). Example is pre-filled first load.</p>
+      <textarea id="priceHtml" rows="10" class="dx-textarea"></textarea>
+      <div style="margin-top:10px;">
+        <button id="savePrices" class="btn btn-primary">Save prices</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3 style="margin-top:0;">Gallery</h3>
+      <p class="muted">Paste image links (one per line) or upload from your phone.</p>
+      <div class="grid-2c">
+        <textarea id="galleryList" rows="10" class="dx-textarea" placeholder="https://...jpg
+https://...png"></textarea>
+        <div>
+          <input id="uploader" type="file" accept="image/*" multiple class="dx-input" />
+          <button id="uploadBtn" class="btn" style="margin-top:6px;">Upload selected</button>
+          <p class="muted" style="margin-top:6px;">Uploads go to Google Drive, links are public.</p>
         </div>
       </div>
-    </div>
-    <div id="list" class="grid"></div>
-
-    <h2 style="margin-top:28px">Site Editor</h2>
-    <div class="panel">
-      <div class="row">
-        <label>Homepage Title<input id="heroTitle" placeholder="hero title"/></label>
-        <label>Homepage Subtitle<input id="heroSub" placeholder="hero subtitle"/></label>
+      <div style="margin-top:10px;">
+        <button id="saveGallery" class="btn btn-primary">Save gallery</button>
       </div>
-      <label>Gallery image URLs (comma-separated)
-        <textarea id="gallery" rows="3" placeholder="https://...jpg, https://...jpg"></textarea>
-      </label>
-      <div style="margin-top:10px;display:flex;gap:8px">
-        <button class="btn" id="load-content">Load Content</button>
-        <button class="btn pink" id="save-content">Save Content</button>
-      </div>
-    </div>
 
-    <p id="admin-status" class="note" style="margin-top:12px"></p>
+      <h4 style="margin-top:14px;">Preview</h4>
+      <div id="preview" class="gallery-grid"></div>
+    </section>
   </main>
 
+  <footer class="muted center" style="margin:16px 0;">
+    © <span id="year"></span> DinaX Nails
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
   <script src="assets/admin.js"></script>
 </body>
 </html>
+
