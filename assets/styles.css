@@ -102,7 +102,7 @@ body{
 .dx-arch-sub{ margin:0; color:var(--muted); }
 .dx-arch-body{ margin-top:10px; }
 .dx-sq-frame{
-  display:block; width:100%; min-height:800px; border:0; border-radius:14px; background:#fff; box-shadow:var(--shadow-sm);
+  display:block; width:100%; min-height:1750px; border:0; border-radius:14px; background:#fff; box-shadow:var(--shadow-sm);
 }
 
 /* Gallery */
