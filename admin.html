@@ -10,21 +10,41 @@
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
-  <header class="nav"><div class="container nav-inner">
+  <header class="nav"><div class="wrap" style="display:flex;justify-content:space-between;align-items:center">
     <a class="logo" href="/">dinaxnails</a>
     <nav><a class="btn" href="/">Back to site</a></nav>
   </div></header>
-  <main class="section">
-    <div class="container">
-      <h2>Pending Requests</h2>
-      <div class="form" style="margin-bottom:12px;">
+
+  <main class="wrap" style="margin:20px 0 40px">
+    <h2>Pending Requests</h2>
+    <div class="panel" style="margin-bottom:16px;">
+      <div class="row">
         <label>Admin Token<input id="token" placeholder="enter your admin token" value="dinax-9327"/></label>
-        <button class="btn" id="load">Load Pending</button>
+        <div style="display:flex;align-items:flex-end;gap:8px">
+          <button class="btn" id="load">Load Pending</button>
+        </div>
       </div>
-      <div id="list" class="grid"></div>
-      <p id="admin-status" class="status"></p>
     </div>
+    <div id="list" class="grid"></div>
+
+    <h2 style="margin-top:28px">Site Editor</h2>
+    <div class="panel">
+      <div class="row">
+        <label>Homepage Title<input id="heroTitle" placeholder="hero title"/></label>
+        <label>Homepage Subtitle<input id="heroSub" placeholder="hero subtitle"/></label>
+      </div>
+      <label>Gallery image URLs (comma-separated)
+        <textarea id="gallery" rows="3" placeholder="https://...jpg, https://...jpg"></textarea>
+      </label>
+      <div style="margin-top:10px;display:flex;gap:8px">
+        <button class="btn" id="load-content">Load Content</button>
+        <button class="btn pink" id="save-content">Save Content</button>
+      </div>
+    </div>
+
+    <p id="admin-status" class="note" style="margin-top:12px"></p>
   </main>
+
   <script src="assets/admin.js"></script>
 </body>
 </html>
