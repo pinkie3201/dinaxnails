@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body class="container">
+  <!-- keep your existing header styles -->
   <header class="card" style="margin-bottom:16px;">
     <h1 style="margin:0;">DinaX Nails</h1>
     <p class="muted" style="margin:6px 0 12px;">Book your appointment below</p>
@@ -14,15 +15,21 @@
   </header>
 
   <main class="grid-2">
-    <!-- Booking -->
+    <!-- Booking card -->
     <section class="card">
       <h2 style="margin-top:0;">Book an Appointment</h2>
-      <p class="muted">Choose a service in Square. “Soak Off” is an add-on (+$10 • +15 min).</p>
+      <p class="muted">
+        Book on this page. Every request is reviewed & approved by Dina in Square.
+        “Soak Off” is an add-on (+$10 • +15 min).
+      </p>
 
-      <!-- Soak Off (visual, keeps your UI the same) -->
+      <!-- Prices from Content sheet (HTML) -->
+      <div id="price-list" class="dx-price card-soft">Loading prices…</div>
+
+      <!-- Soak Off (emoji; visual only) -->
       <div class="dx-soak-card" style="margin:12px 0 16px;">
         <div class="dx-soak-left">
-          <span class="dx-soak-icon" aria-hidden="true"></span>
+          <span class="dx-soak-emoji" aria-hidden="true">🫧</span>
           <div>
             <div class="dx-soak-title">Soak Off</div>
             <div class="dx-soak-sub">+ $10 • +15 min • must be selected in advance</div>
@@ -34,21 +41,15 @@
         </label>
       </div>
 
-      <!-- Book now button (opens new tab) -->
-      <a
-        class="btn btn-primary"
-        id="book-now"
-        target="_blank" rel="noopener"
-        href="https://app.squareup.com/appointments/book/ug2127wkzdnz0l/L4VY7H4KTMKFD/start">Book now</a>
+      <!-- Embedded Square calendar -->
+      <div id="square-embed" class="dx-embed-area"></div>
 
-      <!-- Embedded Square calendar (toggle view) -->
-      <div class="dx-embed-wrap">
-        <button class="btn" id="toggle-embed" type="button">Show embedded booking</button>
-        <div id="embed-area" class="dx-embed-area" hidden>
-          <!-- Start Square Appointments Embed Code -->
-          <script src="https://square.site/appointments/buyer/widget/ug2127wkzdnz0l/L4VY7H4KTMKFD.js"></script>
-          <!-- End Square Appointments Embed Code -->
-        </div>
+      <!-- Optional external button -->
+      <div style="margin-top:10px;">
+        <a class="btn" target="_blank" rel="noopener"
+           href="https://app.squareup.com/appointments/book/ug2127wkzdnz0l/L4VY7H4KTMKFD/start">
+          Open full booking page
+        </a>
       </div>
     </section>
 
@@ -56,10 +57,7 @@
     <section class="card">
       <h2 style="margin-top:0;">Gallery</h2>
       <div id="gallery-grid" class="gallery-grid">
-        <!-- sample images, replace later or keep your content loader -->
-        <img class="gallery-img" src="https://images.unsplash.com/photo-1582582429416-965d9d6f5bf9?q=80&w=1200&auto=format&fit=crop" alt="nails">
-        <img class="gallery-img" src="https://images.unsplash.com/photo-1582582482786-77c0e5905f16?q=80&w=1200&auto=format&fit=crop" alt="nails">
-        <img class="gallery-img" src="https://images.unsplash.com/photo-1610992015732-5d5f4b7c6e05?q=80&w=1200&auto=format&fit=crop" alt="nails">
+        <!-- filled from Content.sheet gallery -->
       </div>
     </section>
   </main>
@@ -68,22 +66,7 @@
     © <span id="year"></span> DinaX Nails
   </footer>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    const toggle = document.getElementById('toggle-embed');
-    const area = document.getElementById('embed-area');
-    if (toggle && area) {
-      toggle.addEventListener('click', () => {
-        const hidden = area.hasAttribute('hidden');
-        if (hidden) {
-          area.removeAttribute('hidden');
-          toggle.textContent = 'Hide embedded booking';
-        } else {
-          area.setAttribute('hidden','');
-          toggle.textContent = 'Show embedded booking';
-        }
-      });
-    }
-  </script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script src="assets/script.js"></script>
 </body>
 </html>
