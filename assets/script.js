@@ -1,12 +1,11 @@
-/* dinaxnails — resilient booking script (v3.1, harden selectors + fallbacks) */
+/* dinaxnails — booking script (v4) */
 
-const BOOKING_ENDPOINT =
-  "https://script.google.com/macros/s/AKfycbzu8UUsLL5IwcDNNCG8eJohs2O5H0pdQ1tlQ8fGqswS8SwyTzdBRWieTKnD63jPGJXmZg/exec";
+// IMPORTANT: put the SAME Web App URL here as in admin.js
+const BOOKING_ENDPOINT = "https://script.google.com/macros/s/AKfycbzu8UUsLL5IwcDNNCG8eJohs2O5H0pdQ1tlQ8fGqswS8SwyTzdBRWieTKnD63jPGJXmZg/exec"; // <-- replace once
 
 const SOAK_OFF_PRICE = 10;
 const SOAK_OFF_EXTRA_MIN = 15;
 
-// canonical maps (works even if labels change)
 const PRICE_MAP = {
   "acrylic-short": 45,
   "acrylic-medium": 50,
@@ -29,45 +28,29 @@ const $ = (s) => document.querySelector(s);
 function refs() {
   return {
     form: $("#booking-form"),
-    serviceEl: $("#service-select") || document.querySelector('select[name="service"]') || document.querySelector("select"),
-    soakEl: $("#soakoff") || document.querySelector('.soak-card input[type="checkbox"]'),
-    dateEl:
-      $("#date-input") ||
-      document.querySelector('input[name="date"]') ||
-      document.querySelector('input[type="date"]') ||
-      document.querySelector('input[placeholder*="MM"]'),
-    basePriceEl: $("#base-price") || document.querySelector('input[name="basePrice"]'),
-    timesBox: $("#times") || document.getElementById("available-times") || document.querySelector("#times-list") || document.querySelector(".times"),
-    refreshBtn: $("#refresh-times") || document.getElementById("refresh") || document.querySelector('button#refresh, button[data-refresh], .btn#refresh-times'),
+    nameEl: $("#name"),
+    phoneEl: $("#phone"),
+    igEl: $("#ig"),
+    serviceEl: $("#service-select"),
+    soakEl: $("#soakoff"),
+    dateEl: $("#date-input"),
+    basePriceEl: $("#base-price"),
+    notesEl: $("#notes"),
+    timesBox: $("#times"),
+    refreshBtn: $("#refresh-times"),
+    requestBtn: $("#request-btn"),
   };
 }
 
 function getSelectedServiceKey(serviceEl) {
   if (!serviceEl) return null;
-  if (serviceEl.tagName === "SELECT") {
-    const opt = serviceEl.options[serviceEl.selectedIndex];
-    if (opt?.value) return opt.value; // our values match the maps
-  }
-  // fallback: try to infer from label text
-  const txt = (serviceEl.textContent || serviceEl.value || "").toLowerCase();
-  if (/acrylic/.test(txt)) {
-    if (/long/.test(txt)) return "acrylic-long";
-    if (/medium/.test(txt)) return "acrylic-medium";
-    return "acrylic-short";
-  }
-  if (/builder/.test(txt) || /gel/.test(txt)) {
-    if (/long/.test(txt)) return "builder-long";
-    if (/medium/.test(txt)) return "builder-medium";
-    return "builder-short";
-  }
-  return null;
+  const opt = serviceEl.options[serviceEl.selectedIndex];
+  return opt && opt.value ? opt.value : null;
 }
 
 function toIsoDate(input) {
   if (!input) return "";
-  // accept input[type=date] (already yyyy-mm-dd)
   if (/^\d{4}-\d{2}-\d{2}$/.test(input)) return input;
-  // accept mm/dd/yyyy
   const m = input.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
   if (m) {
     const mm = m[1].padStart(2, "0");
@@ -79,23 +62,33 @@ function toIsoDate(input) {
 }
 
 function setBasePriceDisplay(el, amount) {
-  if (el) el.value = `$${amount}`;
+  if (!el) return;
+  if (amount == null) {
+    el.value = "";
+    el.placeholder = "Total";
+  } else {
+    el.value = `$${amount}`;
+  }
 }
 
 function computeTotals() {
-  // re-grab refs in case DOM changed
   const { serviceEl, soakEl, basePriceEl } = refs();
   const key = getSelectedServiceKey(serviceEl);
-  // default sensible fallback
-  let price = key ? PRICE_MAP[key] : 45;
-  let duration = key ? DURATION_MAP[key] : 60;
+
+  if (!key) {
+    setBasePriceDisplay(basePriceEl, null);
+    return { price: 0, duration: 60, soak: !!(soakEl && soakEl.checked) };
+  }
+
+  let price = PRICE_MAP[key];
+  let duration = DURATION_MAP[key];
 
   if (soakEl?.checked) {
     price += SOAK_OFF_PRICE;
     duration += SOAK_OFF_EXTRA_MIN;
   }
   setBasePriceDisplay(basePriceEl, price);
-  return { price, duration };
+  return { price, duration, soak: !!(soakEl && soakEl.checked), key };
 }
 
 function renderTimes(slots) {
@@ -119,7 +112,7 @@ function renderTimes(slots) {
         hidden.type = "hidden";
         hidden.id = "selected-time";
         hidden.name = "time";
-        (refs().form || document.body).appendChild(hidden);
+        refs().form.appendChild(hidden);
       }
       hidden.value = t;
       wrap.querySelectorAll(".chip").forEach((x) => x.classList.remove("active"));
@@ -136,12 +129,10 @@ async function loadAvailability() {
   const { duration } = computeTotals();
 
   const iso = toIsoDate((dateEl?.value || "").trim());
-  if (!iso) {
-    renderTimes([]);
-    return;
-  }
+  if (!iso) { renderTimes([]); return; }
+
   try {
-    timesBox && (timesBox.innerHTML = `<div class="muted">Loading…</div>`);
+    timesBox.innerHTML = `<div class="muted">Loading…</div>`;
     const res = await fetch(BOOKING_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -152,29 +143,98 @@ async function loadAvailability() {
     renderTimes(j.slots || []);
   } catch (err) {
     console.error(err);
-    timesBox && (timesBox.innerHTML = `<div class="muted">Couldn’t load availability. Try again.</div>`);
+    timesBox.innerHTML = `<div class="muted">Couldn’t load availability. Try again.</div>`;
   }
 }
 
+async function submitRequest() {
+  const { form, nameEl, phoneEl, igEl, serviceEl, dateEl, notesEl, basePriceEl } = refs();
+  const { price, duration, soak, key } = computeTotals();
+  const timeEl = document.getElementById("selected-time");
+
+  if (!nameEl.value.trim()) return alert("Enter your name.");
+  if (!phoneEl.value.trim()) return alert("Enter your phone.");
+  if (!key) return alert("Select a service.");
+  const dateIso = toIsoDate(dateEl.value);
+  if (!dateIso) return alert("Pick a date.");
+  if (!timeEl || !timeEl.value) return alert("Pick a time.");
+
+  try {
+    const payload = {
+      name: nameEl.value.trim(),
+      phone: phoneEl.value.trim(),
+      igHandle: igEl.value.trim(),
+      service: serviceEl.options[serviceEl.selectedIndex].text,
+      notes: notesEl.value.trim(),
+      date: dateIso,
+      time: timeEl.value,
+      basePrice: price,
+      soakOff: soak,
+      computedDurationMin: duration,
+      totalPrice: price
+    };
+
+    const res = await fetch(BOOKING_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "request", payload }),
+    });
+    const j = await res.json();
+    if (!j.ok) throw new Error(j.error || "Request failed");
+    form.reset();
+    setBasePriceDisplay(basePriceEl, null);
+    $("#times").innerHTML = `<div class="muted">Thanks! Dina will review and confirm.</div>`;
+    alert("Request sent! Dina will confirm by message.");
+  } catch (e) {
+    alert("Could not submit. Please try again.");
+    console.error(e);
+  }
+}
+
+async function loadContent() {
+  try{
+    const res = await fetch(BOOKING_ENDPOINT, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ action:'getContent' })
+    });
+    const j = await res.json();
+    if(!j.ok) return;
+
+    const c = j.content || {};
+    if (c.heroTitle)  document.querySelector('[data-key="heroTitle"]').textContent = c.heroTitle;
+    if (c.heroSub)    document.querySelector('[data-key="heroSub"]').textContent   = c.heroSub;
+
+    if (c.gallery) {
+      const urls = c.gallery.split(',')
+        .map(s => s.trim()).filter(Boolean);
+      const grid = document.getElementById('gallery-grid');
+      if (urls.length && grid) {
+        grid.innerHTML = '';
+        urls.forEach(u=>{
+          const img = document.createElement('img');
+          img.className='gallery-img';
+          img.alt='nails';
+          img.src=u;
+          grid.appendChild(img);
+        });
+      }
+    }
+  }catch(e){ console.warn('content load skipped', e); }
+}
+
 function wire() {
-  const { serviceEl, soakEl, dateEl, refreshBtn } = refs();
-  serviceEl && serviceEl.addEventListener("change", () => {
-    computeTotals();
-    loadAvailability();
-  });
-  soakEl && soakEl.addEventListener("change", () => {
-    computeTotals();
-    loadAvailability();
-  });
-  dateEl && dateEl.addEventListener("change", loadAvailability);
-  refreshBtn && refreshBtn.addEventListener("click", loadAvailability);
+  const { serviceEl, soakEl, dateEl, refreshBtn, requestBtn, basePriceEl } = refs();
+  basePriceEl.placeholder = "Total";
+  basePriceEl.readOnly = true;
+
+  serviceEl.addEventListener("change", () => { computeTotals(); loadAvailability(); });
+  soakEl.addEventListener("change", () => { computeTotals(); loadAvailability(); });
+  dateEl.addEventListener("change", loadAvailability);
+  refreshBtn.addEventListener("click", loadAvailability);
+  requestBtn.addEventListener("click", submitRequest);
+
   computeTotals();
+  loadContent();
 }
 
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", wire);
-} else {
-  wire();
-}
-
-
+document.addEventListener("DOMContentLoaded", wire);
