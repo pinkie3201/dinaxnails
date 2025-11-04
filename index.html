@@ -8,77 +8,52 @@
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
-  <!-- NAV / HERO -->
+  <!-- Header -->
   <header class="site-header">
-    <div class="wrap">
+    <div class="wrap header-row">
       <div class="brand">
-        <div class="logo-bubble" aria-hidden="true">🫧</div>
+        <span class="logo-bubble" aria-hidden="true">🫧</span>
         <h1 class="brand-title">DinaX Nails</h1>
       </div>
       <nav class="nav">
         <a class="nav-link" href="#book">Book</a>
         <a class="nav-link" href="#gallery">Gallery</a>
-        <a class="btn" href="admin.html">Admin</a>
+        <a class="btn btn-ghost" href="admin.html">Admin</a>
       </nav>
     </div>
   </header>
 
+  <!-- Hero -->
   <section class="hero">
-    <div class="wrap">
-      <h2 class="hero-title">Neutral glam, clean lines, and healthy nails.</h2>
-      <p class="hero-sub">Book a time below. Requests are reviewed and approved by Dina.</p>
-      <a class="btn btn-primary" href="#book">Book now</a>
+    <div class="wrap hero-inner">
+      <div>
+        <h2 class="hero-title">Neutral glam. Clean lines. Healthy nails.</h2>
+        <p class="hero-sub">Pick a time below. Requests are reviewed and approved by Dina.</p>
+        <a class="btn btn-primary" href="#book">Book now</a>
+      </div>
+      <div class="hero-card">
+        <p class="hero-note">Studio hours vary weekly. If a time isn’t visible, check back soon.</p>
+      </div>
     </div>
   </section>
 
-  <!-- MAIN -->
+  <!-- Main -->
   <main class="wrap grid">
-    <!-- LEFT: Booking -->
+    <!-- Booking -->
     <section id="book" class="card">
       <h3 class="card-title">Book an Appointment</h3>
-      <p class="muted">
-        Book on this page. Every request is reviewed & approved in Square. “Soak Off” is an add-on (+$10 • +15 min).
-      </p>
-
-      <!-- Prices (from Content.priceHtml) -->
-      <div id="price-list" class="card-soft" aria-live="polite">Loading prices…</div>
-
-      <!-- Soak Off visual row -->
-      <div class="soak card-soft">
-        <div class="soak-left">
-          <span class="soak-emoji" aria-hidden="true">🫧</span>
-          <div>
-            <div class="soak-title">Soak Off</div>
-            <div class="soak-sub">+ $10 • +15 min • must be selected in advance</div>
-          </div>
-        </div>
-        <label class="switch" aria-label="Soak Off (visual only)">
-          <input type="checkbox" disabled />
-          <span class="slider"></span>
-        </label>
-      </div>
-
-      <!-- Square embed mounts here -->
+      <p class="muted">Everything happens here—no redirects.</p>
       <div id="square-embed" class="embed"></div>
-
-      <div class="actions">
-        <a class="btn" target="_blank" rel="noopener"
-           href="https://app.squareup.com/appointments/book/ug2127wkzdnz0l/L4VY7H4KTMKFD/start">
-          Open full booking page
-        </a>
-      </div>
     </section>
 
-    <!-- RIGHT: Gallery -->
+    <!-- Gallery -->
     <section id="gallery" class="card">
       <h3 class="card-title">Gallery</h3>
-      <div id="gallery-grid" class="gallery" aria-live="polite">
-        <!-- Filled from Content.gallery -->
-      </div>
+      <div id="gallery-grid" class="gallery" aria-live="polite"></div>
     </section>
   </main>
 
-  <!-- FOOTER -->
+  <!-- Footer -->
   <footer class="site-footer">
     <div class="wrap">
       <small>© <span id="year"></span> DinaX Nails • Los Angeles</small>
@@ -89,4 +64,5 @@
   <script src="assets/script.js"></script>
 </body>
 </html>
+
 
