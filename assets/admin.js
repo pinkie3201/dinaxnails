@@ -1,12 +1,13 @@
-// IMPORTANT: put the SAME Web App URL here as in script.js
-const BOOKING_ENDPOINT = "https://script.google.com/macros/s/AKfycbzu8UUsLL5IwcDNNCG8eJohs2O5H0pdQ1tlQ8fGqswS8SwyTzdBRWieTKnD63jPGJXmZg/exec"; // <-- replace once
+// assets/admin.js  (admin)
+// NOTE: headers changed to 'text/plain' to avoid CORS preflight.
+
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbzu8UUsLL5IwcDNNCG8eJohs2O5H0pdQ1tlQ8fGqswS8SwyTzdBRWieTKnD63jPGJXmZg/exec";
 
 const listEl   = document.getElementById('list');
 const statusEl = document.getElementById('admin-status');
 const loadBtn  = document.getElementById('load');
 const tokenInput = document.getElementById('token');
 
-// Site editor refs
 const heroTitleEl = document.getElementById('heroTitle');
 const heroSubEl   = document.getElementById('heroSub');
 const galleryEl   = document.getElementById('gallery');
@@ -23,8 +24,8 @@ async function loadPending(){
   const token = tokenInput.value.trim();
   if(!token) { statusEl.textContent = 'Enter your admin token.'; return; }
   try{
-    const url = `${BOOKING_ENDPOINT}?token=${encodeURIComponent(token)}`;
-    const res = await fetch(url);
+    const url = `${ENDPOINT}?token=${encodeURIComponent(token)}`;
+    const res = await fetch(url); // GET is simple, no preflight
     const json = await res.json();
     if(!json.ok) throw new Error(json.error||'Error');
     statusEl.textContent = `${json.items.length} pending request(s).`;
@@ -58,9 +59,9 @@ async function act(action, record, card){
   const token = tokenInput.value.trim();
   const notes = card.querySelector('.admin-notes').value;
   try{
-    const res2 = await fetch(BOOKING_ENDPOINT, {
+    const res2 = await fetch(ENDPOINT, {
       method:'POST',
-      headers:{'Content-Type':'application/json'},
+      headers:{'Content-Type':'text/plain;charset=utf-8'}, // <- CORS-safe
       body: JSON.stringify({ action, token, payload: { rowIndex: record.rowIndex, adminNotes: notes } })
     });
     const j2 = await res2.json();
@@ -72,11 +73,11 @@ async function act(action, record, card){
   }
 }
 
-/* -------- Site Editor -------- */
 async function loadContent(){
   try{
-    const res = await fetch(BOOKING_ENDPOINT, {
-      method:'POST', headers:{'Content-Type':'application/json'},
+    const res = await fetch(ENDPOINT, {
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'}, // <- CORS-safe
       body: JSON.stringify({ action:'getContent' })
     });
     const j = await res.json();
@@ -100,8 +101,9 @@ async function saveContent(){
     gallery:   galleryEl.value.trim()
   };
   try{
-    const res = await fetch(BOOKING_ENDPOINT, {
-      method:'POST', headers:{'Content-Type':'application/json'},
+    const res = await fetch(ENDPOINT, {
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'}, // <- CORS-safe
       body: JSON.stringify({ action:'saveContent', token, payload:{ map } })
     });
     const j = await res.json();
@@ -111,4 +113,5 @@ async function saveContent(){
     statusEl.textContent = 'Error: '+e.message;
   }
 }
+
 
