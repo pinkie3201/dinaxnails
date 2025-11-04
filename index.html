@@ -4,84 +4,64 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>DinaX Nails</title>
-  <link rel="stylesheet" href="assets/styles.css" />
   <meta name="color-scheme" content="light only" />
+  <link rel="stylesheet" href="assets/styles.css" />
 </head>
-   <main class="wrap">
-    <section id="services" style="margin:8px 0 20px">
-      <div class="section-title">Services & Base Prices</div>
-      <div class="muted" style="font-size:13px;margin-bottom:10px">
-        Base price shown before you pick a time. Final total may vary with designs/charms.
+<body>
+  <!-- NAV / HERO -->
+  <header class="site-header">
+    <div class="wrap">
+      <div class="brand">
+        <div class="logo-bubble" aria-hidden="true">🫧</div>
+        <h1 class="brand-title">DinaX Nails</h1>
       </div>
-
-      <div class="grid cards" style="margin-top:10px">
-        <div class="card">
-          <div class="section-title" style="margin-top:0">Acrylic Sets</div>
-          <div class="grid" style="gap:8px">
-            <div class="service-chip">Short Full Set — $45</div>
-            <div class="service-chip">Medium Full Set — $50</div>
-            <div class="service-chip">Long Full Set — $55</div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="section-title" style="margin-top:0">Builder Gel</div>
-          <div class="grid" style="gap:8px">
-            <div class="service-chip">Short — $40</div>
-            <div class="service-chip">Medium — $45</div>
-            <div class="service-chip">Long — $50</div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="section-title" style="margin-top:0">Extras</div>
-          <div class="grid" style="gap:8px">
-            <div class="service-chip">Soak Off — $10 (adds 15 min)</div>
-            <div class="service-chip">Design — additional</div>
-            <div class="service-chip">Charms — additional</div>
-          </div>
-        </div>
-      </div>
-    </section>
-     
-<body class="container">
-  <!-- Header -->
-  <header class="card" style="margin-bottom:16px;">
-    <h1 style="margin:0;">DinaX Nails</h1>
-    <p class="muted" style="margin:6px 0 12px;">Book your appointment below</p>
-    <a class="btn" href="admin.html">Admin</a>
+      <nav class="nav">
+        <a class="nav-link" href="#book">Book</a>
+        <a class="nav-link" href="#gallery">Gallery</a>
+        <a class="btn" href="admin.html">Admin</a>
+      </nav>
+    </div>
   </header>
 
-  <main class="grid-2">
-    <!-- Booking / Prices card -->
-    <section class="card">
-      <h2 style="margin-top:0;">Book an Appointment</h2>
+  <section class="hero">
+    <div class="wrap">
+      <h2 class="hero-title">Neutral glam, clean lines, and healthy nails.</h2>
+      <p class="hero-sub">Book a time below. Requests are reviewed and approved by Dina.</p>
+      <a class="btn btn-primary" href="#book">Book now</a>
+    </div>
+  </section>
+
+  <!-- MAIN -->
+  <main class="wrap grid">
+    <!-- LEFT: Booking -->
+    <section id="book" class="card">
+      <h3 class="card-title">Book an Appointment</h3>
       <p class="muted">
-        Book on this page. Every request is reviewed & approved by Dina in Square.
-        “Soak Off” is an add-on (+$10 • +15 min).
+        Book on this page. Every request is reviewed & approved in Square. “Soak Off” is an add-on (+$10 • +15 min).
       </p>
 
-      <!-- Prices pulled from Google Sheet: Content.priceHtml -->
-      <div id="price-list" class="dx-price card-soft">Loading prices…</div>
+      <!-- Prices (from Content.priceHtml) -->
+      <div id="price-list" class="card-soft" aria-live="polite">Loading prices…</div>
 
-      <!-- Soak Off (emoji; visual only to match your design) -->
-      <div class="dx-soak-card" style="margin:12px 0 16px;">
-        <div class="dx-soak-left">
-          <span class="dx-soak-emoji" aria-hidden="true">🫧</span>
+      <!-- Soak Off visual row -->
+      <div class="soak card-soft">
+        <div class="soak-left">
+          <span class="soak-emoji" aria-hidden="true">🫧</span>
           <div>
-            <div class="dx-soak-title">Soak Off</div>
-            <div class="dx-soak-sub">+ $10 • +15 min • must be selected in advance</div>
+            <div class="soak-title">Soak Off</div>
+            <div class="soak-sub">+ $10 • +15 min • must be selected in advance</div>
           </div>
         </div>
-        <label class="dx-switch" aria-label="Soak Off visual toggle (info only)">
+        <label class="switch" aria-label="Soak Off (visual only)">
           <input type="checkbox" disabled />
-          <span class="dx-slider"></span>
+          <span class="slider"></span>
         </label>
       </div>
 
-      <!-- Square embed mounts here (injected by assets/script.js) -->
-      <div id="square-embed" class="dx-embed-area"></div>
+      <!-- Square embed mounts here -->
+      <div id="square-embed" class="embed"></div>
 
-      <!-- Optional external full booking page -->
-      <div style="margin-top:10px;">
+      <div class="actions">
         <a class="btn" target="_blank" rel="noopener"
            href="https://app.squareup.com/appointments/book/ug2127wkzdnz0l/L4VY7H4KTMKFD/start">
           Open full booking page
@@ -89,23 +69,23 @@
       </div>
     </section>
 
-    <!-- Gallery card -->
-    <section class="card">
-      <h2 style="margin-top:0;">Gallery</h2>
-      <div id="gallery-grid" class="gallery-grid">
-        <!-- Gets filled from Content.gallery (Sheet) by assets/script.js -->
+    <!-- RIGHT: Gallery -->
+    <section id="gallery" class="card">
+      <h3 class="card-title">Gallery</h3>
+      <div id="gallery-grid" class="gallery" aria-live="polite">
+        <!-- Filled from Content.gallery -->
       </div>
     </section>
   </main>
 
-  <!-- Footer -->
-  <footer class="muted center" style="margin:16px 0;">
-    © <span id="year"></span> DinaX Nails
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <small>© <span id="year"></span> DinaX Nails • Los Angeles</small>
+    </div>
   </footer>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
   <script src="assets/script.js"></script>
 </body>
 </html>
