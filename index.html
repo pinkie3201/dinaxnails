@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -8,13 +9,10 @@
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
-  <!-- Header -->
+  <!-- Top bar -->
   <header class="site-header">
     <div class="wrap header-row">
-      <div class="brand">
-        <span class="logo-bubble" aria-hidden="true">🫧</span>
-        <h1 class="brand-title">DinaX Nails</h1>
-      </div>
+      <h1 class="brand"><span class="emoji" aria-hidden="true">💅</span> DinaX Nails</h1>
       <nav class="nav">
         <a class="nav-link" href="#book">Book</a>
         <a class="nav-link" href="#gallery">Gallery</a>
@@ -23,37 +21,38 @@
     </div>
   </header>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="wrap hero-inner">
-      <div>
-        <h2 class="hero-title">Neutral glam. Clean lines. Healthy nails.</h2>
-        <p class="hero-sub">Pick a time below. Requests are reviewed and approved by Dina.</p>
-        <a class="btn btn-primary" href="#book">Book now</a>
-      </div>
-      <div class="hero-card">
-        <p class="hero-note">Studio hours vary weekly. If a time isn’t visible, check back soon.</p>
-      </div>
-    </div>
-  </section>
+  <!-- Hero / Intro & Booking -->
+  <main class="wrap shell">
+    <aside class="intro">
+      <h2 class="title">Neutral glam. Clean lines. Healthy nails.</h2>
+      <p class="sub">Pick a time. Requests are reviewed and approved by Dina.</p>
+      <a class="btn btn-primary" href="#book">Book now</a>
 
-  <!-- Main -->
-  <main class="wrap grid">
-    <!-- Booking -->
-    <section id="book" class="card">
-      <h3 class="card-title">Book an Appointment</h3>
-      <p class="muted">Everything happens here—no redirects.</p>
-      <div id="square-embed" class="embed"></div>
-    </section>
+      <div class="note">
+        <strong>Heads up</strong>
+        <p>Studio hours vary weekly. If a time isn’t visible, check back soon.</p>
+      </div>
+    </aside>
 
-    <!-- Gallery -->
-    <section id="gallery" class="card">
-      <h3 class="card-title">Gallery</h3>
-      <div id="gallery-grid" class="gallery" aria-live="polite"></div>
+    <section id="book" class="booking">
+      <h3 class="section-title">Book an appointment</h3>
+      <!-- Square stays in-page via iframe (no redirect) -->
+      <iframe
+        id="sq-embed"
+        class="sq-frame"
+        src="https://square.site/appointments/buyer/widget/ug2127wkzdnz0l/L4VY7H4KTMKFD"
+        loading="lazy"
+        title="Book with DinaX Nails">
+      </iframe>
     </section>
   </main>
 
-  <!-- Footer -->
+  <!-- Gallery -->
+  <section id="gallery" class="wrap gallery-wrap">
+    <h3 class="section-title">Gallery</h3>
+    <div id="gallery-grid" class="gallery" aria-live="polite"></div>
+  </section>
+
   <footer class="site-footer">
     <div class="wrap">
       <small>© <span id="year"></span> DinaX Nails • Los Angeles</small>
