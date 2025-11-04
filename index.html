@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="assets/styles.css?v=mocha1" />
+  <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
   <header>
@@ -24,8 +24,8 @@
         </div>
       </nav>
       <div class="hero">
-        <h1>Neutral glam, clean sets.</h1>
-        <div class="muted">Transparent pricing. Real-time slots. Dina confirms before anything hits the calendar.</div>
+        <h1 data-key="heroTitle">Neutral glam, clean sets.</h1>
+        <div class="muted" data-key="heroSub">Transparent pricing. Real-time slots. Dina confirms before anything hits the calendar.</div>
       </div>
     </div>
   </header>
@@ -123,7 +123,7 @@
           </div>
           <div>
             <label for="base-price">Base Price</label>
-            <input id="base-price" name="basePrice" value="$0" readonly />
+            <input id="base-price" name="basePrice" placeholder="Total" readonly />
           </div>
         </div>
 
@@ -162,7 +162,7 @@
     <div class="wrap">© 2025 dinaxnails • San Diego • <a class="muted" href="https://instagram.com" target="_blank" rel="noreferrer">Instagram</a></div>
   </footer>
 
-  <script src="assets/script.js?v=mocha1"></script>
+  <script src="assets/script.js"></script>
 
   <!-- Admin PIN (click the title) -->
   <script>
@@ -178,4 +178,3 @@
   </script>
 </body>
 </html>
-
