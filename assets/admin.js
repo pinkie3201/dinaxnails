@@ -1,5 +1,5 @@
 // IMPORTANT: put the SAME Web App URL here as in script.js
-const ENDPOINT = "https://script.google.com/macros/s/AKfycbzu8UUsLL5IwcDNNCG8eJohs2O5H0pdQ1tlQ8fGqswS8SwyTzdBRWieTKnD63jPGJXmZg/exec"; // <-- replace once
+const BOOKING ENDPOINT = "https://script.google.com/macros/s/AKfycbzu8UUsLL5IwcDNNCG8eJohs2O5H0pdQ1tlQ8fGqswS8SwyTzdBRWieTKnD63jPGJXmZg/exec"; // <-- replace once
 
 const listEl   = document.getElementById('list');
 const statusEl = document.getElementById('admin-status');
