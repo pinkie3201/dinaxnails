@@ -1,3 +1,7 @@
+/* DinaX — front-end only
+ * Loads Gallery from GAS Content.gallery
+ * (Square booking is an iframe; nothing to init)
+ */
 const CONTENT_ENDPOINT = "https://script.google.com/macros/s/AKfycbzu8UUsLL5IwcDNNCG8eJohs2O5H0pdQ1tlQ8fGqswS8SwyTzdBRWieTKnD63jPGJXmZg/exec";
 
 async function postForm(action, payload){
@@ -20,10 +24,11 @@ async function loadGallery(){
     const urls = String(j.content?.gallery||"").split(",").map(s=>s.trim()).filter(Boolean);
     urls.forEach(u=>{
       const img = document.createElement("img");
-      img.alt="nails"; img.loading="lazy"; img.src=u;
+      img.alt = "nails";
+      img.loading = "lazy";
+      img.src = u;
       grid.appendChild(img);
     });
   }catch(e){ console.warn("Gallery load failed", e); }
 }
 document.addEventListener("DOMContentLoaded", loadGallery);
-
