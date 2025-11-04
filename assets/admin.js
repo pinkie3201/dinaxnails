@@ -1,11 +1,21 @@
-const ENDPOINT = "https://script.google.com/macros/s/AKfycbzu8UUsLL5IwcDNNCG8eJohs2O5H0pdQ1tlQ8fGqswS8SwyTzdBRWieTKnD63jPGJXmZg/exec";
+// IMPORTANT: put the SAME Web App URL here as in script.js
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbzu8UUsLL5IwcDNNCG8eJohs2O5H0pdQ1tlQ8fGqswS8SwyTzdBRWieTKnD63jPGJXmZg/exec"; // <-- replace once
 
-const listEl = document.getElementById('list');
+const listEl   = document.getElementById('list');
 const statusEl = document.getElementById('admin-status');
-const loadBtn = document.getElementById('load');
+const loadBtn  = document.getElementById('load');
 const tokenInput = document.getElementById('token');
 
+// Site editor refs
+const heroTitleEl = document.getElementById('heroTitle');
+const heroSubEl   = document.getElementById('heroSub');
+const galleryEl   = document.getElementById('gallery');
+const loadContentBtn = document.getElementById('load-content');
+const saveContentBtn = document.getElementById('save-content');
+
 loadBtn.addEventListener('click', loadPending);
+loadContentBtn.addEventListener('click', loadContent);
+saveContentBtn.addEventListener('click', saveContent);
 
 async function loadPending(){
   statusEl.textContent = 'Loading…';
@@ -61,3 +71,44 @@ async function act(action, record, card){
     statusEl.textContent = 'Error: '+err.message;
   }
 }
+
+/* -------- Site Editor -------- */
+async function loadContent(){
+  try{
+    const res = await fetch(ENDPOINT, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ action:'getContent' })
+    });
+    const j = await res.json();
+    if(!j.ok) throw new Error(j.error||'Cannot load content');
+    const c = j.content || {};
+    heroTitleEl.value = c.heroTitle || '';
+    heroSubEl.value   = c.heroSub   || '';
+    galleryEl.value   = c.gallery   || '';
+    statusEl.textContent = 'Content loaded.';
+  }catch(e){
+    statusEl.textContent = 'Error: '+e.message;
+  }
+}
+
+async function saveContent(){
+  const token = tokenInput.value.trim();
+  if(!token) { statusEl.textContent = 'Enter your admin token.'; return; }
+  const map = {
+    heroTitle: heroTitleEl.value.trim(),
+    heroSub:   heroSubEl.value.trim(),
+    gallery:   galleryEl.value.trim()
+  };
+  try{
+    const res = await fetch(ENDPOINT, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ action:'saveContent', token, payload:{ map } })
+    });
+    const j = await res.json();
+    if(!j.ok) throw new Error(j.error||'Save failed');
+    statusEl.textContent = 'Content saved.';
+  }catch(e){
+    statusEl.textContent = 'Error: '+e.message;
+  }
+}
+
