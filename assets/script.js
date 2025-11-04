@@ -1,7 +1,7 @@
-/* dinaxnails — booking script (v4) */
+// assets/script.js  (booking)
+// NOTE: only header changed to 'text/plain'. Everything else same.
 
-// IMPORTANT: put the SAME Web App URL here as in admin.js
-const BOOKING_ENDPOINT = "https://script.google.com/macros/s/AKfycbzu8UUsLL5IwcDNNCG8eJohs2O5H0pdQ1tlQ8fGqswS8SwyTzdBRWieTKnD63jPGJXmZg/exec"; // <-- replace once
+const BOOKING_ENDPOINT = "https://script.google.com/macros/s/AKfycbzu8UUsLL5IwcDNNCG8eJohs2O5H0pdQ1tlQ8fGqswS8SwyTzdBRWieTKnD63jPGJXmZg/exec";
 
 const SOAK_OFF_PRICE = 10;
 const SOAK_OFF_EXTRA_MIN = 15;
@@ -135,7 +135,8 @@ async function loadAvailability() {
     timesBox.innerHTML = `<div class="muted">Loading…</div>`;
     const res = await fetch(BOOKING_ENDPOINT, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      // text/plain avoids CORS preflight on GAS
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify({ action: "availability", payload: { date: iso, duration } }),
     });
     const j = await res.json();
@@ -176,7 +177,7 @@ async function submitRequest() {
 
     const res = await fetch(BOOKING_ENDPOINT, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "text/plain;charset=utf-8" }, // <- CORS-safe
       body: JSON.stringify({ action: "request", payload }),
     });
     const j = await res.json();
@@ -194,7 +195,8 @@ async function submitRequest() {
 async function loadContent() {
   try{
     const res = await fetch(BOOKING_ENDPOINT, {
-      method:'POST', headers:{'Content-Type':'application/json'},
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'}, // <- CORS-safe
       body: JSON.stringify({ action:'getContent' })
     });
     const j = await res.json();
@@ -205,8 +207,7 @@ async function loadContent() {
     if (c.heroSub)    document.querySelector('[data-key="heroSub"]').textContent   = c.heroSub;
 
     if (c.gallery) {
-      const urls = c.gallery.split(',')
-        .map(s => s.trim()).filter(Boolean);
+      const urls = c.gallery.split(',').map(s => s.trim()).filter(Boolean);
       const grid = document.getElementById('gallery-grid');
       if (urls.length && grid) {
         grid.innerHTML = '';
