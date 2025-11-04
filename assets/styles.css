@@ -1,111 +1,131 @@
-/* ==== DinaX scoped additions ==== */
-.grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-@media (max-width:900px){ .grid-2{ grid-template-columns:1fr; } }
-.center{ text-align:center; }
-.card{ background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:14px; padding:16px; }
+/* =========================================================
+   DinaX Nails — Aesthetic theme (soft neutral / pink)
+   Everything is mobile-first and clean.
+   ========================================================= */
+
+:root{
+  --bg:#faf7f6;
+  --card:#ffffff;
+  --ink:#201a1a;
+  --muted:#6f6a69;
+  --line:rgba(0,0,0,.08);
+  --brand:#ff9fb3;     /* primary pink */
+  --brand-2:#ffd9e1;   /* soft pink */
+  --radius:16px;
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0; font-family: ui-sans-serif, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color:var(--ink); background:var(--bg);
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+}
+
+/* Wrappers */
+.wrap{ width:100%; max-width:1100px; margin:0 auto; padding:0 16px; }
+
+/* Header / Nav */
+.site-header{
+  background:var(--card);
+  border-bottom:1px solid var(--line);
+  position:sticky; top:0; z-index:20;
+}
+.site-header .wrap{
+  display:flex; align-items:center; justify-content:space-between; gap:12px; height:64px;
+}
+.brand{ display:flex; align-items:center; gap:10px; }
+.brand-title{ font-size:1.4rem; margin:0; }
+.logo-bubble{
+  width:36px; height:36px; border-radius:50%; display:grid; place-items:center;
+  background:radial-gradient(circle at 35% 30%, #fff 0 40%, transparent 41%), var(--brand-2);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.9), 0 2px 6px rgba(0,0,0,.06);
+}
+.nav{ display:flex; gap:10px; align-items:center; }
+.nav-link{ color:var(--ink); text-decoration:none; padding:8px 10px; border-radius:10px; }
+.nav-link:hover{ background:#f3efee; }
+
+/* Hero */
+.hero{ padding:40px 0 22px; }
+.hero-title{ margin:0 0 6px; font-size:1.9rem; }
+.hero-sub{ margin:0 0 12px; color:var(--muted); }
+
+/* Grid */
+.grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; padding-bottom:28px; }
+@media (max-width:900px){ .grid{ grid-template-columns:1fr; } }
+
+/* Cards */
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+  padding:16px; box-shadow:0 1px 2px rgba(0,0,0,.03);
+}
+.card-title{ margin:0 0 6px; font-size:1.3rem; }
+.card-soft{
+  background:var(--card);
+  border:1px dashed var(--line);
+  border-radius:12px;
+  padding:12px;
+}
+
+/* Buttons */
 .btn{
-  appearance:none; border:1px solid rgba(0,0,0,.12); background:#fff; color:#1a1a1a;
+  appearance:none; border:1px solid var(--line); background:#fff; color:var(--ink);
   padding:10px 14px; border-radius:12px; cursor:pointer; transition:.15s ease;
   display:inline-block; text-decoration:none;
 }
 .btn:hover{ transform:translateY(-1px); box-shadow:0 2px 6px rgba(0,0,0,.08); }
-.btn-primary{ background:#ff9fb3; border-color:transparent; color:#241b1d; }
+.btn:active{ transform:translateY(0); }
+.btn-primary{ background:var(--brand); border-color:transparent; color:#241b1d; }
+
+/* Text utilities */
+.muted{ color:var(--muted); }
+
+/* Soak row */
+.soak{ display:flex; align-items:center; justify-content:space-between; }
+.soak-left{ display:flex; align-items:center; gap:12px; }
+.soak-title{ font-weight:600; }
+.soak-sub{ font-size:.9rem; color:var(--muted); }
+.soak-emoji{
+  font-size:26px; width:40px; height:40px; border-radius:50%;
+  display:grid; place-items:center; background:var(--brand-2);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.9), 0 2px 6px rgba(0,0,0,.06);
+}
+
+/* Toggle (visual only) */
+.switch{ position:relative; display:inline-block; width:46px; height:26px; }
+.switch input{ display:none; }
+.slider{
+  position:absolute; inset:0; cursor:pointer; background:#e8e8e8; border-radius:999px; transition:.2s;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);
+}
+.slider:before{
+  content:""; position:absolute; height:22px; width:22px; left:2px; top:2px; border-radius:50%;
+  background:#fff; transition:transform .2s; box-shadow:0 1px 3px rgba(0,0,0,.15);
+}
+.switch input:checked + .slider{ background:var(--brand-2); }
+.switch input:checked + .slider:before{ transform:translateX(20px); }
+
+/* Embed wrapper */
+.embed{ border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+.embed iframe{ display:block; width:100%; min-height:1200px; border:0; }
+
+/* Actions row */
+.actions{ display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
 
 /* Gallery */
-.gallery-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
-.gallery-img{ width:100%; height:140px; object-fit:cover; border-radius:12px; border:1px solid rgba(0,0,0,.08); }
-@media (max-width:700px){ .gallery-grid{ grid-template-columns:repeat(2,1fr); } }
+.gallery{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+@media (max-width:900px){ .gallery{ grid-template-columns:repeat(2,1fr); } }
+.gallery img{ width:100%; height:180px; object-fit:cover; border-radius:12px; border:1px solid var(--line); }
 
-/* Soak Off bubbles (scoped) */
-.dx-soak-card{
-  display:flex; align-items:center; justify-content:space-between;
-  padding:14px 16px; border-radius:12px;
-  background:#fdecee; border:1px solid rgba(0,0,0,.08);
-}
-.dx-soak-left{ display:flex; align-items:center; gap:12px; }
-.dx-soak-title{ font-weight:600; }
-.dx-soak-sub{ font-size:.85rem; opacity:.85; }
+/* Footer */
+.site-footer{ border-top:1px solid var(--line); padding:20px 0; color:var(--muted); }
 
-/* Bubbles icon (pure CSS) */
-.dx-soak-icon{
-  width:40px; height:40px; border-radius:50%;
-  background:
-    radial-gradient(circle at 32% 30%, rgba(255,255,255,.95) 0 34%, transparent 35%),
-    radial-gradient(circle at 70% 65%, rgba(255,255,255,.75) 0 22%, transparent 23%),
-    #ffd6de;
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.8),
-    0 2px 6px rgba(0,0,0,.06);
-  position:relative; display:inline-block;
-}
-.dx-soak-icon::after{
-  content:""; position:absolute; right:-8px; top:-6px;
-  width:9px; height:9px; border-radius:50%; background:#ffd6de;
-  box-shadow:
-    0 16px 0 -2px #ffd6de,
-    -12px 8px 0 -3px #ffd6de;
+/* Inputs (Admin uses these too) */
+.input, .textarea{
+  width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:10px; background:#fff;
 }
 
-/* Toggle (visual only) */
-.dx-switch{ position:relative; display:inline-block; width:46px; height:26px; }
-.dx-switch input{ display:none; }
-.dx-slider{
-  position:absolute; inset:0; cursor:pointer;
-  background:#e8e8e8; border-radius:999px; transition:background .2s;
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,.08);
-}
-.dx-slider::before{
-  content:""; position:absolute; height:22px; width:22px; left:2px; top:2px;
-  background:#fff; border-radius:50%; transition:transform .2s;
-  box-shadow:0 1px 3px rgba(0,0,0,.15);
-}
-.dx-switch input:checked + .dx-slider{ background:#ffd1db; }
-.dx-switch input:checked + .dx-slider::before{ transform:translateX(20px); }
-
-/* Embed frame wrapper */
-.dx-embed-wrap{ margin-top:14px; display:grid; gap:10px; }
-.dx-embed-area{ border:1px solid rgba(0,0,0,.08); border-radius:12px; overflow:hidden; padding:0; }
-
-/* ===== DinaX scoped additions (won't affect your theme) ===== */
-.grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-.grid-2c{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-@media (max-width:900px){ .grid-2{ grid-template-columns:1fr; } .grid-2c{ grid-template-columns:1fr; } }
-
-.card{ background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:14px; padding:16px; }
-.card-soft{ background:#fff; border:1px dashed rgba(0,0,0,.08); border-radius:12px; padding:12px; }
-.btn{
-  appearance:none; border:1px solid rgba(0,0,0,.12); background:#fff; color:#1a1a1a;
-  padding:10px 14px; border-radius:12px; cursor:pointer; transition:.15s ease;
-  display:inline-block; text-decoration:none;
-}
-.btn:hover{ transform:translateY(-1px); box-shadow:0 2px 6px rgba(0,0,0,.08); }
-.btn-primary{ background:#ff9fb3; border-color:transparent; color:#241b1d; }
-.muted{ color:#666; }
-
-.gallery-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
-.gallery-img{ width:100%; height:140px; object-fit:cover; border-radius:12px; border:1px solid rgba(0,0,0,.08); }
-@media (max-width:700px){ .gallery-grid{ grid-template-columns:repeat(2,1fr); } }
-
-.dx-price h3{ margin:0 0 6px; }
-.dx-price ul{ margin:6px 0 0; padding-left:18px; }
-.dx-textarea, .dx-input{ width:100%; padding:10px 12px; border:1px solid rgba(0,0,0,.12); border-radius:10px; font:inherit; }
-
-/* Soak Off (emoji) */
-.dx-soak-card{ display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-radius:12px; background:#fdecee; border:1px solid rgba(0,0,0,.08); }
-.dx-soak-left{ display:flex; align-items:center; gap:12px; }
-.dx-soak-title{ font-weight:600; }
-.dx-soak-sub{ font-size:.85rem; opacity:.85; }
-.dx-soak-emoji{ font-size:28px; line-height:1; display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:50%; background:#ffd6de; box-shadow: inset 0 0 0 1px rgba(255,255,255,.85), 0 2px 6px rgba(0,0,0,.06); }
-
-/* Toggle (visual only) */
-.dx-switch{ position:relative; display:inline-block; width:46px; height:26px; }
-.dx-switch input{ display:none; }
-.dx-slider{ position:absolute; inset:0; cursor:pointer; background:#e8e8e8; border-radius:999px; transition:background .2s; box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); }
-.dx-slider::before{ content:""; position:absolute; height:22px; width:22px; left:2px; top:2px; background:#fff; border-radius:50%; transition:transform .2s; box-shadow:0 1px 3px rgba(0,0,0,.15); }
-.dx-switch input:checked + .dx-slider{ background:#ffd1db; }
-.dx-switch input:checked + .dx-slider::before{ transform:translateX(20px); }
-
-/* Square embed frame */
-.dx-embed-area{ border:1px solid rgba(0,0,0,.08); border-radius:12px; overflow:hidden; padding:0; }
+/* Small helpers */
+.hidden{ display:none !important; }
 
 
