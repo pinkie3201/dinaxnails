@@ -8,75 +8,81 @@
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
-  <!-- Header -->
-  <header class="site-header">
-    <div class="wrap header-row">
-      <h1 class="brand">DinaX Nails</h1>
-      <nav class="nav">
-        <a class="nav-link" href="#book">Book</a>
-        <a class="nav-link" href="#gallery">Gallery</a>
-        <a class="nav-link" target="_blank" rel="noopener" href="https://www.instagram.com/dinaxnailss/">Instagram</a>
+  <!-- Top Bar -->
+  <header class="dx-header">
+    <div class="dx-wrap dx-header-row">
+      <a class="dx-brand" href="#top" aria-label="DinaX Nails">DinaX Nails</a>
+      <nav class="dx-nav">
+        <a class="dx-navlink" href="#book">Book</a>
+        <a class="dx-navlink" href="#gallery">Gallery</a>
+        <a class="dx-navlink" target="_blank" rel="noopener" href="https://www.instagram.com/dinaxnailss/">Instagram</a>
       </nav>
     </div>
   </header>
 
   <!-- Hero -->
-  <section class="hero">
-    <div class="wrap hero-inner">
-      <div class="hero-copy">
-        <h2 class="hero-title">Neutral glam. Clean lines. Healthy nails.</h2>
-        <p class="hero-sub">El Cajon, CA · Requests are reviewed & approved by Dina.</p>
-        <a class="btn btn-primary" href="#book">Book now</a>
-        <div class="hero-note">
-          <strong>Heads up</strong>
-          <p>Hours vary weekly. If a time isn’t visible, check back soon.</p>
+  <section class="dx-hero" id="top">
+    <div class="dx-wrap">
+      <h1 class="dx-hero-title">Neutral glam. Clean lines. Healthy nails.</h1>
+      <p class="dx-hero-sub">El Cajon, CA • Requests are reviewed & approved by Dina.</p>
+      <a class="dx-btn dx-btn-primary" href="#book">Book now</a>
+    </div>
+  </section>
+
+  <!-- Info strip -->
+  <section class="dx-info">
+    <div class="dx-wrap dx-info-inner">
+      <div class="dx-info-item">
+        <span class="dx-info-k">Heads up</span>
+        <span class="dx-info-v">Hours vary weekly. If a time isn’t visible, check back soon.</span>
+      </div>
+      <div class="dx-info-item">
+        <span class="dx-info-k">Style</span>
+        <span class="dx-info-v">Modern neutrals • Soft glam • Minimal designs</span>
+      </div>
+      <div class="dx-info-item">
+        <span class="dx-info-k">Booking</span>
+        <span class="dx-info-v">Phone + Instagram handle required</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCH BOOKING SECTION -->
+  <section id="book" class="dx-arch-wrap">
+    <div class="dx-wrap">
+      <div class="dx-arch">
+        <div class="dx-arch-head">
+          <h2 class="dx-arch-title">Book an appointment</h2>
+          <p class="dx-arch-sub">Everything happens here — no redirects.</p>
+        </div>
+
+        <div class="dx-arch-body">
+          <!-- Square embed keeps user on-page -->
+          <iframe
+            title="Book with DinaX Nails"
+            class="dx-sq-frame"
+            src="https://square.site/appointments/buyer/widget/ug2127wkzdnz0l/L4VY7H4KTMKFD"
+            loading="lazy">
+          </iframe>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Shell: Intro + Booking Arch Card -->
-  <main class="wrap shell">
-    <aside class="intro">
-      <h3 class="intro-title">What to expect</h3>
-      <ul class="intro-list">
-        <li>Clean prep, structured base, and refined shaping.</li>
-        <li>Modern neutrals, soft glam, minimal designs.</li>
-        <li>Please include your phone and IG when booking.</li>
-      </ul>
-    </aside>
-
-    <section id="book" class="booking-arch">
-      <div class="arch-head">
-        <h3 class="arch-title">Book an appointment</h3>
-        <p class="arch-sub">Everything happens here—no redirects.</p>
-      </div>
-
-      <!-- Square embed (iframe keeps user on-page) -->
-      <div class="arch-body">
-        <iframe
-          id="sq-embed"
-          class="sq-frame"
-          src="https://square.site/appointments/buyer/widget/ug2127wkzdnz0l/L4VY7H4KTMKFD"
-          loading="lazy"
-          title="Book with DinaX Nails">
-        </iframe>
-      </div>
-    </section>
-  </main>
-
   <!-- Gallery -->
-  <section id="gallery" class="wrap gallery-wrap">
-    <div class="section-head">
-      <h3 class="section-title">Gallery</h3>
-      <p class="muted">Recent work — uploaded by Dina.</p>
+  <section id="gallery" class="dx-gallery-section">
+    <div class="dx-wrap">
+      <div class="dx-gallery-head">
+        <h2 class="dx-section-title">Gallery</h2>
+        <p class="dx-muted">Recent work</p>
+      </div>
+      <div id="gallery-grid" class="dx-gallery" aria-live="polite"></div>
     </div>
-    <div id="gallery-grid" class="gallery" aria-live="polite"></div>
   </section>
 
   <!-- Footer -->
-  <footer class="site-footer">
-    <div class="wrap">
+  <footer class="dx-footer">
+    <div class="dx-wrap">
       <small>© <span id="year"></span> DinaX Nails • El Cajon, CA</small>
     </div>
   </footer>
