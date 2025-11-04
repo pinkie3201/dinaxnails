@@ -1,117 +1,97 @@
-// assets/admin.js  (admin)
-// NOTE: headers changed to 'text/plain' to avoid CORS preflight.
-
+/* Admin editor for Content sheet:
+ * - Load current priceHtml + gallery
+ * - Save edits
+ * - Upload images to Drive via GAS (returns public links)
+ */
 const ENDPOINT = "https://script.google.com/macros/s/AKfycbzu8UUsLL5IwcDNNCG8eJohs2O5H0pdQ1tlQ8fGqswS8SwyTzdBRWieTKnD63jPGJXmZg/exec";
+const ADMIN_TOKEN = "dinax-9327"; // must match GAS
 
-const listEl   = document.getElementById('list');
-const statusEl = document.getElementById('admin-status');
-const loadBtn  = document.getElementById('load');
-const tokenInput = document.getElementById('token');
+const $ = (s)=>document.querySelector(s);
 
-const heroTitleEl = document.getElementById('heroTitle');
-const heroSubEl   = document.getElementById('heroSub');
-const galleryEl   = document.getElementById('gallery');
-const loadContentBtn = document.getElementById('load-content');
-const saveContentBtn = document.getElementById('save-content');
-
-loadBtn.addEventListener('click', loadPending);
-loadContentBtn.addEventListener('click', loadContent);
-saveContentBtn.addEventListener('click', saveContent);
-
-async function loadPending(){
-  statusEl.textContent = 'Loading…';
-  listEl.innerHTML = '';
-  const token = tokenInput.value.trim();
-  if(!token) { statusEl.textContent = 'Enter your admin token.'; return; }
-  try{
-    const url = `${ENDPOINT}?token=${encodeURIComponent(token)}`;
-    const res = await fetch(url); // GET is simple, no preflight
-    const json = await res.json();
-    if(!json.ok) throw new Error(json.error||'Error');
-    statusEl.textContent = `${json.items.length} pending request(s).`;
-    json.items.forEach((r) => {
-      const ig = r.igHandle ? `@${String(r.igHandle).replace(/^@/,'')}` : '';
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.innerHTML = `
-        <h4>${r.name||'Unknown'} — ${r.service||''}</h4>
-        <p class="muted">${r.date||''} ${r.time||''} • ${r.basePrice ? ('$'+r.basePrice) : ''} • SoakOff: ${r.soakOff||'No'}</p>
-        <p>${r.phone||''} • ${ig}</p>
-        <p>${(r.notes||'').replace(/\n/g,'<br>')}</p>
-        <div class="form" style="padding:12px;margin-top:10px;">
-          <label>Admin Notes<textarea rows="2" class="admin-notes"></textarea></label>
-          <div style="margin-top:8px; display:flex; gap:8px;">
-            <button class="btn approve">Approve</button>
-            <button class="btn decline">Decline</button>
-          </div>
-        </div>
-      `;
-      card.querySelector('.approve').addEventListener('click', ()=>act('approve', r, card));
-      card.querySelector('.decline').addEventListener('click', ()=>act('decline', r, card));
-      listEl.appendChild(card);
-    });
-  }catch(err){
-    statusEl.textContent = 'Error: '+err.message;
-  }
-}
-
-async function act(action, record, card){
-  const token = tokenInput.value.trim();
-  const notes = card.querySelector('.admin-notes').value;
-  try{
-    const res2 = await fetch(ENDPOINT, {
-      method:'POST',
-      headers:{'Content-Type':'text/plain;charset=utf-8'}, // <- CORS-safe
-      body: JSON.stringify({ action, token, payload: { rowIndex: record.rowIndex, adminNotes: notes } })
-    });
-    const j2 = await res2.json();
-    if(!j2.ok) throw new Error(j2.error||'Action failed');
-    card.style.opacity = .5;
-    statusEl.textContent = `${action} OK`;
-  }catch(err){
-    statusEl.textContent = 'Error: '+err.message;
-  }
+async function postForm(action, payload, withToken=false){
+  const body = new URLSearchParams({
+    action,
+    payload: JSON.stringify(payload||{}),
+    ...(withToken?{token:ADMIN_TOKEN}:{})
+  }).toString();
+  const res = await fetch(ENDPOINT, {
+    method:'POST',
+    headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},
+    body
+  });
+  const t = await res.text();
+  try { return JSON.parse(t); } catch(e){ console.error(t); throw e; }
 }
 
 async function loadContent(){
-  try{
-    const res = await fetch(ENDPOINT, {
-      method:'POST',
-      headers:{'Content-Type':'text/plain;charset=utf-8'}, // <- CORS-safe
-      body: JSON.stringify({ action:'getContent' })
-    });
-    const j = await res.json();
-    if(!j.ok) throw new Error(j.error||'Cannot load content');
-    const c = j.content || {};
-    heroTitleEl.value = c.heroTitle || '';
-    heroSubEl.value   = c.heroSub   || '';
-    galleryEl.value   = c.gallery   || '';
-    statusEl.textContent = 'Content loaded.';
-  }catch(e){
-    statusEl.textContent = 'Error: '+e.message;
-  }
+  const j = await postForm('getContent',{});
+  if (!j.ok) return;
+  $('#priceHtml').value = j.content?.priceHtml || `<h3>Prices</h3>
+<ul>
+  <li>Acrylic • Short — $45</li>
+  <li>Acrylic • Medium — $50</li>
+  <li>Acrylic • Long — $55</li>
+  <li>Builder Gel • Short — $40</li>
+  <li>Builder Gel • Medium — $45</li>
+  <li>Builder Gel • Long — $50</li>
+</ul>`;
+  const urls = String(j.content?.gallery||'').split(',').map(s=>s.trim()).filter(Boolean);
+  $('#galleryList').value = urls.join('\n');
+  renderPreview(urls);
 }
 
-async function saveContent(){
-  const token = tokenInput.value.trim();
-  if(!token) { statusEl.textContent = 'Enter your admin token.'; return; }
-  const map = {
-    heroTitle: heroTitleEl.value.trim(),
-    heroSub:   heroSubEl.value.trim(),
-    gallery:   galleryEl.value.trim()
-  };
-  try{
-    const res = await fetch(ENDPOINT, {
-      method:'POST',
-      headers:{'Content-Type':'text/plain;charset=utf-8'}, // <- CORS-safe
-      body: JSON.stringify({ action:'saveContent', token, payload:{ map } })
-    });
-    const j = await res.json();
-    if(!j.ok) throw new Error(j.error||'Save failed');
-    statusEl.textContent = 'Content saved.';
-  }catch(e){
-    statusEl.textContent = 'Error: '+e.message;
-  }
+function renderPreview(urls){
+  const wrap = $('#preview');
+  wrap.innerHTML = '';
+  urls.forEach(u=>{
+    const img = document.createElement('img');
+    img.className = 'gallery-img';
+    img.alt = 'nails';
+    img.loading = 'lazy';
+    img.src = u;
+    wrap.appendChild(img);
+  });
 }
+
+async function savePrices(){
+  const map = { priceHtml: $('#priceHtml').value };
+  const j = await postForm('saveContent', { map }, true);
+  alert(j.ok ? 'Saved!' : ('Failed: ' + j.error));
+}
+
+async function saveGallery(){
+  const lines = $('#galleryList').value.split('\n').map(s=>s.trim()).filter(Boolean);
+  const map = { gallery: lines.join(', ') };
+  const j = await postForm('saveContent', { map }, true);
+  if (j.ok) { renderPreview(lines); }
+  alert(j.ok ? 'Saved!' : ('Failed: ' + j.error));
+}
+
+async function uploadImages(){
+  const input = $('#uploader');
+  if (!input.files || !input.files.length) return alert('Pick images first.');
+  const fd = new FormData();
+  fd.append('action', 'uploadImages');
+  fd.append('token', ADMIN_TOKEN);
+  Array.from(input.files).forEach((f,i)=> fd.append('file'+i, f, f.name));
+  const res = await fetch(ENDPOINT, { method:'POST', body: fd });
+  const t = await res.text();
+  let j;
+  try { j = JSON.parse(t); } catch(e){ console.error(t); alert('Upload failed.'); return; }
+  if (!j.ok) return alert('Upload failed: ' + j.error);
+  const existing = $('#galleryList').value.trim();
+  const merged = (existing ? existing + '\n' : '') + j.urls.join('\n');
+  $('#galleryList').value = merged;
+  renderPreview(merged.split('\n').map(s=>s.trim()).filter(Boolean));
+  alert('Uploaded!');
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  loadContent().catch(console.error);
+  $('#savePrices').addEventListener('click', ()=>savePrices().catch(console.error));
+  $('#saveGallery').addEventListener('click', ()=>saveGallery().catch(console.error));
+  $('#uploadBtn').addEventListener('click', ()=>uploadImages().catch(console.error));
+});
+
 
 
