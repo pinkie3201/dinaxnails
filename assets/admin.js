@@ -23,7 +23,7 @@ async function loadPending(){
   const token = tokenInput.value.trim();
   if(!token) { statusEl.textContent = 'Enter your admin token.'; return; }
   try{
-    const url = `${ENDPOINT}?token=${encodeURIComponent(token)}`;
+    const url = `${BOOKING_ENDPOINT}?token=${encodeURIComponent(token)}`;
     const res = await fetch(url);
     const json = await res.json();
     if(!json.ok) throw new Error(json.error||'Error');
@@ -58,7 +58,7 @@ async function act(action, record, card){
   const token = tokenInput.value.trim();
   const notes = card.querySelector('.admin-notes').value;
   try{
-    const res2 = await fetch(ENDPOINT, {
+    const res2 = await fetch(BOOKING_ENDPOINT, {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ action, token, payload: { rowIndex: record.rowIndex, adminNotes: notes } })
@@ -75,7 +75,7 @@ async function act(action, record, card){
 /* -------- Site Editor -------- */
 async function loadContent(){
   try{
-    const res = await fetch(ENDPOINT, {
+    const res = await fetch(BOOKING_ENDPOINT, {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ action:'getContent' })
     });
@@ -100,7 +100,7 @@ async function saveContent(){
     gallery:   galleryEl.value.trim()
   };
   try{
-    const res = await fetch(ENDPOINT, {
+    const res = await fetch(BOOKING_ENDPOINT, {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ action:'saveContent', token, payload:{ map } })
     });
