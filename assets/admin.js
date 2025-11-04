@@ -1,12 +1,8 @@
-/* Admin editor for Content sheet:
- * - Load current priceHtml + gallery
- * - Save edits
- * - Upload images to Drive via GAS (returns public links)
- */
+/* Admin editor for Content sheet (prices + gallery) + Drive uploads */
 const ENDPOINT = "https://script.google.com/macros/s/AKfycbzu8UUsLL5IwcDNNCG8eJohs2O5H0pdQ1tlQ8fGqswS8SwyTzdBRWieTKnD63jPGJXmZg/exec";
 const ADMIN_TOKEN = "dinax-9327"; // must match GAS
 
-const $ = (s)=>document.querySelector(s);
+const $ = sel => document.querySelector(sel);
 
 async function postForm(action, payload, withToken=false){
   const body = new URLSearchParams({
@@ -26,7 +22,7 @@ async function postForm(action, payload, withToken=false){
 async function loadContent(){
   const j = await postForm('getContent',{});
   if (!j.ok) return;
-  $('#priceHtml').value = j.content?.priceHtml || `<h3>Prices</h3>
+  $('#priceHtml').value = j.content?.priceHtml || `<h4>Prices</h4>
 <ul>
   <li>Acrylic • Short — $45</li>
   <li>Acrylic • Medium — $50</li>
@@ -41,14 +37,10 @@ async function loadContent(){
 }
 
 function renderPreview(urls){
-  const wrap = $('#preview');
-  wrap.innerHTML = '';
+  const wrap = $('#preview'); wrap.innerHTML='';
   urls.forEach(u=>{
     const img = document.createElement('img');
-    img.className = 'gallery-img';
-    img.alt = 'nails';
-    img.loading = 'lazy';
-    img.src = u;
+    img.alt='nails'; img.loading='lazy'; img.src=u;
     wrap.appendChild(img);
   });
 }
@@ -63,7 +55,7 @@ async function saveGallery(){
   const lines = $('#galleryList').value.split('\n').map(s=>s.trim()).filter(Boolean);
   const map = { gallery: lines.join(', ') };
   const j = await postForm('saveContent', { map }, true);
-  if (j.ok) { renderPreview(lines); }
+  if (j.ok) renderPreview(lines);
   alert(j.ok ? 'Saved!' : ('Failed: ' + j.error));
 }
 
@@ -76,8 +68,7 @@ async function uploadImages(){
   Array.from(input.files).forEach((f,i)=> fd.append('file'+i, f, f.name));
   const res = await fetch(ENDPOINT, { method:'POST', body: fd });
   const t = await res.text();
-  let j;
-  try { j = JSON.parse(t); } catch(e){ console.error(t); alert('Upload failed.'); return; }
+  let j; try { j = JSON.parse(t); } catch(e){ console.error(t); return alert('Upload failed.'); }
   if (!j.ok) return alert('Upload failed: ' + j.error);
   const existing = $('#galleryList').value.trim();
   const merged = (existing ? existing + '\n' : '') + j.urls.join('\n');
@@ -92,6 +83,4 @@ document.addEventListener('DOMContentLoaded', ()=>{
   $('#saveGallery').addEventListener('click', ()=>saveGallery().catch(console.error));
   $('#uploadBtn').addEventListener('click', ()=>uploadImages().catch(console.error));
 });
-
-
 
