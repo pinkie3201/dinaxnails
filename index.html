@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>DinaX Nails</title>
   <link rel="stylesheet" href="assets/styles.css" />
+  <meta name="color-scheme" content="light only" />
 </head>
 <body class="container">
-  <!-- keep your existing header styles -->
+  <!-- Header -->
   <header class="card" style="margin-bottom:16px;">
     <h1 style="margin:0;">DinaX Nails</h1>
     <p class="muted" style="margin:6px 0 12px;">Book your appointment below</p>
@@ -15,7 +16,7 @@
   </header>
 
   <main class="grid-2">
-    <!-- Booking card -->
+    <!-- Booking / Prices card -->
     <section class="card">
       <h2 style="margin-top:0;">Book an Appointment</h2>
       <p class="muted">
@@ -23,10 +24,10 @@
         “Soak Off” is an add-on (+$10 • +15 min).
       </p>
 
-      <!-- Prices from Content sheet (HTML) -->
+      <!-- Prices pulled from Google Sheet: Content.priceHtml -->
       <div id="price-list" class="dx-price card-soft">Loading prices…</div>
 
-      <!-- Soak Off (emoji; visual only) -->
+      <!-- Soak Off (emoji; visual only to match your design) -->
       <div class="dx-soak-card" style="margin:12px 0 16px;">
         <div class="dx-soak-left">
           <span class="dx-soak-emoji" aria-hidden="true">🫧</span>
@@ -41,10 +42,10 @@
         </label>
       </div>
 
-      <!-- Embedded Square calendar -->
+      <!-- Square embed mounts here (injected by assets/script.js) -->
       <div id="square-embed" class="dx-embed-area"></div>
 
-      <!-- Optional external button -->
+      <!-- Optional external full booking page -->
       <div style="margin-top:10px;">
         <a class="btn" target="_blank" rel="noopener"
            href="https://app.squareup.com/appointments/book/ug2127wkzdnz0l/L4VY7H4KTMKFD/start">
@@ -53,20 +54,24 @@
       </div>
     </section>
 
-    <!-- Gallery -->
+    <!-- Gallery card -->
     <section class="card">
       <h2 style="margin-top:0;">Gallery</h2>
       <div id="gallery-grid" class="gallery-grid">
-        <!-- filled from Content.sheet gallery -->
+        <!-- Gets filled from Content.gallery (Sheet) by assets/script.js -->
       </div>
     </section>
   </main>
 
+  <!-- Footer -->
   <footer class="muted center" style="margin:16px 0;">
     © <span id="year"></span> DinaX Nails
   </footer>
 
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
   <script src="assets/script.js"></script>
 </body>
 </html>
+
