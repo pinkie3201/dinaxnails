@@ -1,180 +1,107 @@
+<!-- ================================
+File: index.html
+================================== -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>dinaxnails • neutral glam, clean sets</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
-
+  <title>DinaX Nails</title>
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
-<body>
-  <header>
-    <div class="wrap">
-      <nav>
-        <div class="brand"><a href="#" id="brand-admin">dinaxnails</a></div>
-        <div class="navlinks">
-          <a href="#services">Services</a>
-          <a href="#gallery">Gallery</a>
-          <a href="#policies">Policies</a>
-          <a class="btn pink" href="#book">Book</a>
-        </div>
-      </nav>
-      <div class="hero">
-        <h1 data-key="heroTitle">Neutral glam, clean sets.</h1>
-        <div class="muted" data-key="heroSub">Transparent pricing. Real-time slots. Dina confirms before anything hits the calendar.</div>
-      </div>
-    </div>
+<body class="container">
+  <header class="hero card">
+    <h1 data-key="heroTitle">DinaX Nails</h1>
+    <p class="muted" data-key="heroSub">Book your appointment below</p>
+    <a class="btn" href="admin.html">Admin</a>
   </header>
 
-  <main class="wrap">
-    <section id="services" style="margin:8px 0 20px">
-      <div class="section-title">Services & Base Prices</div>
-      <div class="muted" style="font-size:13px;margin-bottom:10px">
-        Base price shown before you pick a time. Final total may vary with designs/charms.
-      </div>
-
-      <div class="grid cards" style="margin-top:10px">
-        <div class="card">
-          <div class="section-title" style="margin-top:0">Acrylic Sets</div>
-          <div class="grid" style="gap:8px">
-            <div class="service-chip">Short Full Set — $45</div>
-            <div class="service-chip">Medium Full Set — $50</div>
-            <div class="service-chip">Long Full Set — $55</div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="section-title" style="margin-top:0">Builder Gel</div>
-          <div class="grid" style="gap:8px">
-            <div class="service-chip">Short — $40</div>
-            <div class="service-chip">Medium — $45</div>
-            <div class="service-chip">Long — $50</div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="section-title" style="margin-top:0">Extras</div>
-          <div class="grid" style="gap:8px">
-            <div class="service-chip">Soak Off — $10 (adds 15 min)</div>
-            <div class="service-chip">Design — additional</div>
-            <div class="service-chip">Charms — additional</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="gallery" style="margin:22px 0">
-      <div class="section-title">Gallery</div>
-      <div class="grid" id="gallery-grid">
-        <img src="https://images.unsplash.com/photo-1610992015732-0e006c2aa6f1?auto=format&fit=crop&w=1200&q=80" alt="nails" class="gallery-img">
-        <img src="https://images.unsplash.com/photo-1603575449027-b62d09f728d9?auto=format&fit=crop&w=1200&q=80" alt="nails" class="gallery-img">
-      </div>
-    </section>
-
-    <section id="book" style="margin:26px 0 30px">
-      <div class="section-title">Book an Appointment</div>
-      <p class="muted" style="margin-top:0">Pick a service, select a date, choose a time. Dina reviews and confirms your request.</p>
-
-      <form id="booking-form" class="panel">
-        <div class="row">
-          <div>
-            <label for="name">Full Name</label>
-            <input id="name" name="name" placeholder="Your name" />
-          </div>
-          <div>
-            <label for="phone">Phone</label>
-            <input id="phone" name="phone" placeholder="(555) 555-5555" />
-          </div>
+  <main class="grid-2">
+    <!-- Booking Card -->
+    <section class="card">
+      <h2>Book an appointment</h2>
+      <form id="booking-form" class="form" onsubmit="return false;">
+        <div class="grid-2c">
+          <label>Full Name
+            <input id="name" type="text" placeholder="Your name" required />
+          </label>
+          <label>Phone
+            <input id="phone" type="tel" placeholder="(555) 555-5555" required />
+          </label>
         </div>
 
-        <div class="row">
-          <div>
-            <label for="ig">Instagram Handle</label>
-            <input id="ig" name="igHandle" placeholder="@yourhandle" />
+        <label>Instagram (optional)
+          <input id="ig" type="text" placeholder="@yourhandle" />
+        </label>
+
+        <label>Service
+          <select id="service-select" required>
+            <option value="">Select a service</option>
+            <option value="acrylic-short">Acrylic — Short</option>
+            <option value="acrylic-medium">Acrylic — Medium</option>
+            <option value="acrylic-long">Acrylic — Long</option>
+            <option value="builder-short">Builder Gel — Short</option>
+            <option value="builder-medium">Builder Gel — Medium</option>
+            <option value="builder-long">Builder Gel — Long</option>
+          </select>
+        </label>
+
+        <!-- Soak Off bubbles card -->
+        <div class="form-row soak-card" aria-live="polite">
+          <div class="soak-left">
+            <span class="soak-icon" aria-hidden="true"></span>
+            <div class="soak-copy">
+              <div class="soak-title">Soak Off</div>
+              <div class="soak-sub">+ $10 • +15 min • must be selected in advance</div>
+            </div>
           </div>
-          <div>
-            <label for="service-select">Service</label>
-            <select id="service-select" name="service">
-              <option value="" selected>Select a service</option>
-              <option value="acrylic-short">Acrylic • Short Full Set — $45</option>
-              <option value="acrylic-medium">Acrylic • Medium Full Set — $50</option>
-              <option value="acrylic-long">Acrylic • Long Full Set — $55</option>
-              <option value="builder-short">Builder Gel • Short — $40</option>
-              <option value="builder-medium">Builder Gel • Medium — $45</option>
-              <option value="builder-long">Builder Gel • Long — $50</option>
-            </select>
-          </div>
+          <label class="switch">
+            <input id="soakoff" type="checkbox" />
+            <span class="slider"></span>
+          </label>
         </div>
 
-        <div class="soak-card" style="margin:8px 0 10px">
-          <div>
-            <div style="font-weight:700">Soak Off</div>
-            <div class="note">+ $10 • +15 min • must be selected in advance</div>
-          </div>
-          <input id="soakoff" class="toggle" type="checkbox" />
+        <div class="grid-2c">
+          <label>Date
+            <input id="date-input" type="date" required />
+          </label>
+          <label>Total
+            <input id="base-price" type="text" placeholder="Total" readonly />
+          </label>
         </div>
 
-        <div class="row">
-          <div>
-            <label for="date-input">Date</label>
-            <input id="date-input" name="date" type="date" />
-          </div>
-          <div>
-            <label for="base-price">Base Price</label>
-            <input id="base-price" name="basePrice" placeholder="Total" readonly />
-          </div>
+        <label>Notes (optional)
+          <textarea id="notes" rows="3" placeholder="Design ideas, colors, notes…"></textarea>
+        </label>
+
+        <div class="actions">
+          <button id="refresh-times" type="button" class="btn">Refresh times</button>
+          <button id="request-btn" type="button" class="btn btn-primary">Request booking</button>
         </div>
 
-        <div class="times-head">
-          <div style="font-weight:600">Available times</div>
-          <button type="button" id="refresh-times" class="btn">Refresh</button>
-        </div>
-        <div id="times" class="panel" style="padding:12px">
-          <div class="muted">Select a service and date, then click Refresh.</div>
-        </div>
-
-        <div style="margin-top:10px">
-          <label for="notes">Notes (inspo links, allergies)</label>
-          <textarea id="notes" name="notes" placeholder="Paste IG/TikTok links or notes"></textarea>
-        </div>
-
-        <div style="margin-top:12px">
-          <button type="button" class="btn pink" id="request-btn">Request this time</button>
-          <span class="note" style="margin-left:8px">Nothing is booked until Dina approves.</span>
+        <div id="times" class="times card-soft">
+          <div class="muted">Select a service and date, then click “Refresh times”.</div>
         </div>
       </form>
     </section>
 
-    <section id="policies" style="margin:28px 0 40px">
-      <div class="section-title">Policies</div>
-      <ul class="muted" style="margin-top:8px">
-        <li>Deposit holds your spot (sent after approval).</li>
-        <li>24-hour reschedule window; 10-minute grace period.</li>
-        <li>Soak Off must be selected during booking (+ adds 15 minutes).</li>
-        <li>Please arrive with bare nails unless you booked removal.</li>
-      </ul>
+    <!-- Gallery / Content Card -->
+    <section class="card">
+      <h2>Recent work</h2>
+      <div id="gallery-grid" class="gallery-grid">
+        <!-- images filled by JS via getContent -->
+      </div>
     </section>
   </main>
 
-  <footer>
-    <div class="wrap">© 2025 dinaxnails • San Diego • <a class="muted" href="https://instagram.com" target="_blank" rel="noreferrer">Instagram</a></div>
+  <footer class="muted center">
+    © <span id="year"></span> DinaX Nails
   </footer>
 
-  <script src="assets/script.js"></script>
-
-  <!-- Admin PIN (click the title) -->
   <script>
-    (function(){
-      const ADMIN_PIN = "9327";
-      document.getElementById("brand-admin")?.addEventListener("click",(e)=>{
-        e.preventDefault();
-        const pin = prompt("Admin PIN");
-        if(pin===ADMIN_PIN) window.location.href = "admin.html";
-        else if(pin) alert("Wrong code.");
-      });
-    })();
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
+  <script src="assets/script.js"></script>
 </body>
 </html>
+
