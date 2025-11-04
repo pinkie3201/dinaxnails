@@ -1,6 +1,3 @@
-// assets/script.js
-// Loads gallery from GAS Content.tab (key: gallery). Booking is an iframe; no redirects.
-
 const CONTENT_ENDPOINT = "https://script.google.com/macros/s/AKfycbzu8UUsLL5IwcDNNCG8eJohs2O5H0pdQ1tlQ8fGqswS8SwyTzdBRWieTKnD63jPGJXmZg/exec";
 
 async function postForm(action, payload){
@@ -28,6 +25,5 @@ async function loadGallery(){
     });
   }catch(e){ console.warn("Gallery load failed", e); }
 }
-
 document.addEventListener("DOMContentLoaded", loadGallery);
 
