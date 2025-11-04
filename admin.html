@@ -6,50 +6,57 @@
   <title>DinaX Admin</title>
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
-<body class="container">
-  <header class="card" style="margin-bottom:16px;">
-    <a class="btn" href="index.html">← Back to site</a>
-    <h2 style="margin:0;">Admin: Site Content</h2>
-    <p class="muted" style="margin:6px 0 0;">Edit prices & gallery. Changes are instant.</p>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <div class="brand">
+        <div class="logo-bubble" aria-hidden="true">🫧</div>
+        <h1 class="brand-title">DinaX Admin</h1>
+      </div>
+      <nav class="nav">
+        <a class="btn" href="index.html">← Back to site</a>
+      </nav>
+    </div>
   </header>
 
-  <main class="grid-2">
+  <main class="wrap grid">
     <section class="card">
-      <h3 style="margin-top:0;">Prices</h3>
-      <p class="muted">Paste HTML (simple list). Example is pre-filled first load.</p>
-      <textarea id="priceHtml" rows="10" class="dx-textarea"></textarea>
-      <div style="margin-top:10px;">
+      <h3 class="card-title">Prices</h3>
+      <p class="muted">Paste simple HTML (list). Example shows on first load.</p>
+      <textarea id="priceHtml" class="textarea" rows="10"></textarea>
+      <div class="actions">
         <button id="savePrices" class="btn btn-primary">Save prices</button>
       </div>
     </section>
 
     <section class="card">
-      <h3 style="margin-top:0;">Gallery</h3>
-      <p class="muted">Paste image links (one per line) or upload from your phone.</p>
-      <div class="grid-2c">
-        <textarea id="galleryList" rows="10" class="dx-textarea" placeholder="https://...jpg
+      <h3 class="card-title">Gallery</h3>
+      <p class="muted">Paste links (one per line) or upload from your phone.</p>
+      <div class="grid" style="grid-template-columns:1fr 1fr;">
+        <textarea id="galleryList" class="textarea" rows="10" placeholder="https://...jpg
 https://...png"></textarea>
         <div>
-          <input id="uploader" type="file" accept="image/*" multiple class="dx-input" />
-          <button id="uploadBtn" class="btn" style="margin-top:6px;">Upload selected</button>
-          <p class="muted" style="margin-top:6px;">Uploads go to Google Drive, links are public.</p>
+          <input id="uploader" type="file" accept="image/*" multiple class="input" />
+          <button id="uploadBtn" class="btn" style="margin-top:8px;">Upload selected</button>
+          <p class="muted" style="margin-top:6px;">Uploads go to Google Drive and become public links.</p>
         </div>
       </div>
-      <div style="margin-top:10px;">
+      <div class="actions">
         <button id="saveGallery" class="btn btn-primary">Save gallery</button>
       </div>
 
-      <h4 style="margin-top:14px;">Preview</h4>
-      <div id="preview" class="gallery-grid"></div>
+      <h4 style="margin:12px 0 8px;">Preview</h4>
+      <div id="preview" class="gallery"></div>
     </section>
   </main>
 
-  <footer class="muted center" style="margin:16px 0;">
-    © <span id="year"></span> DinaX Nails
+  <footer class="site-footer">
+    <div class="wrap"><small>© <span id="year"></span> DinaX Nails</small></div>
   </footer>
 
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
   <script src="assets/admin.js"></script>
 </body>
 </html>
+
 
