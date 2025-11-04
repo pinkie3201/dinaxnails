@@ -122,20 +122,21 @@ function renderTimes(slots){
 }
 
 async function loadAvailability(){
-  const { dateEl, timesBox } = refs();
-  const { duration } = computeTotals();
-  const iso = toIsoDate((dateEl?.value || '').trim());
-  if (!iso){ renderTimes([]); return; }
+  const {dateEl,timesBox}=refs(); const {duration}=computeTotals();
+  const iso=toIsoDate((dateEl?.value||'').trim());
+  if(!iso){ renderTimes([]); return; }
   try{
-    timesBox.innerHTML = `<div class="muted">Loading…</div>`;
-    const j = await postForm('availability', { date: iso, duration });
-    if (!j.ok) throw new Error(j.error||'Failed');
+    timesBox.innerHTML=`<div class="muted">Loading…</div>`;
+    const j=await postForm('availability',{date:iso,duration});
+    console.log('availability reply:', j); // <-- debug
+    if(!j.ok) throw new Error(j.error||'fail');
     renderTimes(j.slots||[]);
-  }catch(err){
-    console.error(err);
-    timesBox.innerHTML = `<div class="muted">Couldn't load availability. Try again.</div>`;
+  }catch(e){
+    console.error('availability failed:', e);
+    timesBox.innerHTML=`<div class="muted">Couldn't load availability. ${e.message}</div>`;
   }
 }
+
 
 async function submitRequest(){
   const { form, nameEl, phoneEl, igEl, serviceEl, dateEl, notesEl, basePriceEl } = refs();
