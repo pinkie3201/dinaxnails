@@ -1,76 +1,132 @@
 :root{
-  --mocha:#6B4F3A; --cocoa:#4B2E23; --cream:#F6EFEA;
-  --white:#fff; --blush:#FADADD; --rose:#E7A9B2; --line:#E9DDD6;
+  /* Brand palette: mocha brown, cream white, blush pink */
+  --bg:#f8f5f2;          /* cream page background */
+  --panel:#ffffff;       /* cards/panels */
+  --ink:#3b2d2a;         /* mocha text */
+  --muted:#7d6d67;       /* softer mocha */
+  --line:#e9dfd8;        /* hairlines */
+  --chip:#fff9f8;        /* light chip */
+  --accent:#f3c8cf;      /* blush pink */
+  --accent-ink:#593a38;  /* text on blush */
+  --accent-line:#e8c7cc; /* blush borders */
 }
 
-/* base */
 *{box-sizing:border-box}
-html,body{margin:0}
-body{font-family:Inter,system-ui,Arial,sans-serif;background:#f7efe9;color:var(--cocoa);line-height:1.6}
+html,body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:Inter,system-ui,Arial,sans-serif;
+  line-height:1.45;
+}
+.wrap{width:min(1100px,92%);margin:0 auto}
 
-/* narrow wrap like your old layout */
-.wrap{width:min(920px,92%);margin:0 auto}
+/* header / nav */
+header{padding:26px 0}
+nav{display:flex;justify-content:space-between;align-items:center}
+.brand a{
+  text-decoration:none;color:var(--ink);
+  font-family:"Playfair Display",serif;font-size:20px;font-weight:600
+}
+.navlinks a{
+  margin-left:16px;text-decoration:none;color:var(--ink);opacity:.92;font-size:14px
+}
+.navlinks a.btn{opacity:1}
 
-/* tiny nav */
-.mini-nav{background:transparent;padding:6px 0}
-.mini-nav .wrap{display:flex;justify-content:space-between;align-items:center}
-.brand{font-family:"Playfair Display",serif;font-weight:700;color:var(--mocha);font-size:12px;text-decoration:none}
-.mini-nav nav a{font-size:12px;margin-left:10px;color:#7b5f53;text-decoration:none}
-.chip{border:1px solid #f0c6cf;background:var(--blush);color:#4b2e23;padding:6px 10px;border-radius:10px;text-decoration:none;display:inline-block;font-size:12px}
+.hero h1{
+  font-family:"Playfair Display",serif;
+  margin:6px 0 8px;font-size:40px
+}
+.hero .muted{max-width:680px}
 
-/* hero minimal */
-.hero-min{padding:10px 0 6px}
-.hero-min h1{font-family:"Playfair Display",serif;margin:0 0 4px;color:#2f2019;font-size:20px}
-.muted{color:#7f665a}
-.tiny{font-size:12px}
+/* sections/cards */
+.section-title{font-weight:700;margin:22px 0 10px}
+.muted{color:var(--muted)}
+.note{color:var(--muted);font-size:12px}
+.grid{display:grid;gap:14px}
 
-/* sections */
-.section{padding:12px 0;border-top:1px solid var(--line)}
-.section:first-of-type{border-top:0}
-.sub{margin:12px 0 6px;color:var(--mocha);font-family:"Playfair Display",serif;font-size:14px}
+.cards{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:14px
+}
+.service-chip{
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:10px 12px;
+  background:#fff
+}
+/* blush-tinted chips inside cards */
+.card .service-chip{
+  background:#fdebed;
+  border-color:var(--accent-line);
+}
 
-/* service list looks like your old white cards */
-.list{display:grid;grid-template-columns:1fr;gap:8px}
-.card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px}
-.card h4{margin:0 0 4px;font-size:13px}
-.card p{margin:0 0 4px;font-weight:700;font-size:13px}
-.card small{font-size:12px;color:#7f665a}
+/* panels / form */
+.panel{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:18px
+}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{display:block;font-size:13px;margin:6px 0}
+input,select,textarea{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:#fff;
+  padding:10px 12px;
+  font:inherit;color:inherit
+}
+input[readonly]{background:#fbf8f5}
+textarea{min-height:110px;resize:vertical}
 
-/* gallery two big tiles like before */
-.gallery{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.gallery img{width:100%;height:360px;object-fit:cover;border-radius:6px;border:1px solid var(--line)}
+/* buttons and time chips */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid var(--line);border-radius:999px;
+  background:var(--chip);padding:.55rem .9rem;cursor:pointer
+}
+.btn.pink{background:var(--accent);color:var(--accent-ink)}
+.btn.warn{background:#ffe8e8}
 
-/* booking panel (white card) */
-.panel{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px}
-label{display:flex;flex-direction:column;font-weight:600;font-size:13px}
-input,select,textarea{margin-top:6px;border:1px solid #e6d7cf;border-radius:8px;padding:8px 10px;background:#fff;font-size:13px}
-.status{min-height:20px;margin-top:8px;font-size:13px}
+.times-head{margin:8px 0 6px;display:flex;justify-content:space-between;align-items:center}
+.time-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.chip{
+  padding:.55rem .9rem;border:1px solid var(--line);
+  border-radius:999px;background:#fff;cursor:pointer
+}
+.chip.active{background:#fdebed;border-color:var(--accent-line)}
 
-/* Soak Off pill (kept) */
-.soak{display:flex;justify-content:center;margin:6px 0}
-.soak-card{position:relative;cursor:pointer}
-.soak-card input{position:absolute;inset:0;opacity:0;pointer-events:none}
-.soak-visual{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--line);border-radius:12px;background:#fff}
-.bubble{font-size:16px}
-.txt strong{font-weight:700}
-.txt small{display:block;color:#7f665a;font-size:12px}
-.toggle{margin-left:auto;width:40px;height:22px;background:#f4eeeb;border:1px solid #e6d7cf;border-radius:999px;position:relative}
-.toggle .dot{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;border:1px solid #e6d7cf;transition:transform .18s}
-.soak-card input:checked + .soak-visual{background:var(--blush);border-color:#e9b4be}
-.soak-card input:checked + .soak-visual .toggle{background:var(--rose)}
-.soak-card input:checked + .soak-visual .toggle .dot{transform:translateX(18px)}
+/* gallery */
+.gallery-img{width:100%;border-radius:14px;border:1px solid var(--line)}
+#gallery-grid{grid-template-columns:1fr 1fr}
 
-/* slots */
-.slots-wrap{border:1px dashed var(--line);border-radius:8px;padding:8px;background:#fff;margin:6px 0}
-.slots-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-.slots{display:flex;flex-wrap:wrap;gap:6px}
-.slot-btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 8px;font-size:13px;cursor:pointer}
-.slot-btn.selected{background:var(--blush)}
+/* soak off pill */
+.soak-card{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  background:#fdebed;border:1px solid var(--accent-line);
+  border-radius:14px;padding:12px 14px
+}
+.toggle{
+  appearance:none;width:46px;height:26px;border-radius:999px;
+  background:#e8ded8;position:relative;border:1px solid var(--line);cursor:pointer
+}
+.toggle:checked{background:#f4d6da;border-color:#e7bdc3}
+.toggle:checked::after{left:22px}
+.toggle::after{
+  content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;
+  background:#fff;transition:all .18s
+}
 
-/* policies */
-.bullets{padding-left:16px;margin:6px 0;font-size:13px}
+/* footer */
+footer{padding:28px 0;color:var(--muted);font-size:12px}
 
-/* footer minimal */
-.mini-foot{padding:10px 0}
-.foot-inner{display:flex;justify-content:space-between;align-items:center}
+/* responsive */
+@media (max-width:900px){
+  .cards{grid-template-columns:1fr}
+  .row{grid-template-columns:1fr}
+}
